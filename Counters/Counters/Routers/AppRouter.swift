@@ -16,6 +16,10 @@ class AppRouter {
     }
 
     func start() {
+        guard let welcomeViewController = WelcomeViewController.instantiate() else {
+            return
+        }
+        window.rootViewController = welcomeViewController
         window.makeKeyAndVisible()
     }
 }
