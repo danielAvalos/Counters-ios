@@ -42,9 +42,35 @@ final class CreateCounterViewController: UIViewController {
 // MARK: - Private functions
 
 private extension CreateCounterViewController {
+
     func setup() {
     }
 
     func setupNavigation() {
+        navigationItem.backButtonTitle = "Cancel"
+        let saveButton = UIBarButtonItem(title: "Save",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(saveCounter(sender:)))
+        let cancelButton = UIBarButtonItem(title: "Cancel",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(cancelCounter(sender:)))
+        navigationItem.rightBarButtonItem = saveButton
+        navigationItem.leftBarButtonItem = cancelButton
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.title = "Create a counter"
+    }
+
+    @objc
+    func saveCounter(sender _: UIBarButtonItem) {
+        showAlert(title: "Successful", message: "Counter Saved", customActionTitle: "OK") { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+    }
+
+    @objc
+    func cancelCounter(sender _: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
     }
 }

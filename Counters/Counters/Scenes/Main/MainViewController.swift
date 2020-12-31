@@ -54,6 +54,11 @@ final class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTableView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupNavigation()
     }
 
@@ -61,28 +66,52 @@ final class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         navigationItem.hidesSearchBarWhenScrolling = true
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
 }
 
 // MARK: - Private functions
 
 private extension MainViewController {
     func setup() {
+        MainConfigurator.configure(self)
     }
 
     func setupNavigation() {
-        navigationItem.title = "Categorias"
+        let editButton = UIBarButtonItem(title: "Edit",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(editCounters(sender:)))
+        navigationItem.leftBarButtonItem = editButton
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Counters"
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
         searchController.delegate = self
         navigationItem.hidesSearchBarWhenScrolling = false
     }
 
+    func setupTableView() {
+        tableView.layer.shadowOpacity = 0.05
+        tableView.layer.shadowOffset = CGSize(width: 0, height: 3)
+    }
+
     // MARK: - Actions
 
     @objc
     func refreshMain(sender _: UIRefreshControl) {
-        //interactor?.prepareCategories()
         refreshControl.endRefreshing()
+    }
+
+    @objc
+    func editCounters(sender _: UIBarButtonItem) {
+    }
+
+    @IBAction func didTapAddCounter(_ sender: Any) {
+        router?.navigateToNewCounter()
     }
 }
 
@@ -90,7 +119,6 @@ private extension MainViewController {
 extension MainViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
-        navigationItem.title = "Counters Search"
         guard isopenSearch else {
             return
         }

@@ -40,6 +40,7 @@ final class WelcomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadData()
     }
 }
 
@@ -49,6 +50,26 @@ private extension WelcomeViewController {
 
     func setup() {
         WelcomeConfigurator.configure(self)
+    }
+
+    func loadData() {
+        let firtsLetterAttributes = [NSAttributedString.Key.foregroundColor: UIColor.color(named: .black) ?? UIColor.black,
+                                     .font: UIFont.systemFont(ofSize: 33)]
+
+        let secondsLetterAttributes = [NSAttributedString.Key.foregroundColor: UIColor.color(named: .orange) ?? UIColor.orange,
+                                       .font: UIFont.systemFont(ofSize: 33)]
+
+        let attributeText = NSMutableAttributedString(string: "Welcome to \n",
+                                           attributes: firtsLetterAttributes)
+        let counterText = NSAttributedString(string: "Counters",
+                                             attributes: secondsLetterAttributes)
+        attributeText.append(counterText)
+        titleLabel.attributedText = attributeText
+
+        continueButton.layer.cornerRadius = 8
+        continueButton.layer.shadowOpacity = 0.05
+        continueButton.layer.shadowColor = UIColor.color(named: .black)?.cgColor ?? UIColor.black.cgColor
+        continueButton.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
 }
 
