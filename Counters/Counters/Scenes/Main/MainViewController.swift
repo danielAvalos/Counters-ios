@@ -18,6 +18,7 @@ final class MainViewController: UIViewController {
 
     // MARK: - IBOutlets
 
+    @IBOutlet private weak var itemsSelectedLabel: UILabel!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var addContainerView: UIView!
     @IBOutlet private weak var addButton: UIButton!
@@ -110,8 +111,11 @@ private extension MainViewController {
     func editCounters(sender _: UIBarButtonItem) {
     }
 
-    @IBAction func didTapAddCounter(_ sender: Any) {
+    @IBAction func didTapAction(_ sender: Any) {
         router?.navigateToNewCounter()
+    }
+    
+    @IBAction func didTapDelete(_ sender: Any) {
     }
 }
 

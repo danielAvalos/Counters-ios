@@ -30,6 +30,9 @@
 		E963160F259D481800AE8F2F /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963160E259D481800AE8F2F /* UIViewController+Alerts.swift */; };
 		E9631614259D4F2100AE8F2F /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9631613259D4F2100AE8F2F /* Colors.xcassets */; };
 		E963161C259D502A00AE8F2F /* UIColor+Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963161B259D502A00AE8F2F /* UIColor+Brand.swift */; };
+		E963162B259D5B0300AE8F2F /* CustomizedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963162A259D5B0300AE8F2F /* CustomizedView.swift */; };
+		E9631633259D5D3700AE8F2F /* CustomizedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9631632259D5D3700AE8F2F /* CustomizedTextField.swift */; };
+		E9631638259D5E2C00AE8F2F /* CustomizedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9631637259D5E2C00AE8F2F /* CustomizedLabel.swift */; };
 		E9E6ECCD259B7EDE001B1FFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E6ECCC259B7EDE001B1FFF /* AppDelegate.swift */; };
 		E9E6ECCF259B7EDE001B1FFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E6ECCE259B7EDE001B1FFF /* SceneDelegate.swift */; };
 		E9E6ECD7259B7EDF001B1FFF /* Counters.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9E6ECD5259B7EDF001B1FFF /* Counters.xcdatamodeld */; };
@@ -89,6 +92,9 @@
 		E963160E259D481800AE8F2F /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		E9631613259D4F2100AE8F2F /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E963161B259D502A00AE8F2F /* UIColor+Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Brand.swift"; sourceTree = "<group>"; };
+		E963162A259D5B0300AE8F2F /* CustomizedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizedView.swift; sourceTree = "<group>"; };
+		E9631632259D5D3700AE8F2F /* CustomizedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizedTextField.swift; sourceTree = "<group>"; };
+		E9631637259D5E2C00AE8F2F /* CustomizedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizedLabel.swift; sourceTree = "<group>"; };
 		E9E6ECC9259B7EDE001B1FFF /* Counters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Counters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9E6ECCC259B7EDE001B1FFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9E6ECCE259B7EDE001B1FFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -232,6 +238,16 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		E9631629259D5A3D00AE8F2F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				E9631637259D5E2C00AE8F2F /* CustomizedLabel.swift */,
+				E9631632259D5D3700AE8F2F /* CustomizedTextField.swift */,
+				E963162A259D5B0300AE8F2F /* CustomizedView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		E9E6ECC0259B7EDE001B1FFF = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +317,7 @@
 		E9E6ED0D259B7FE5001B1FFF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E9631629259D5A3D00AE8F2F /* Common */,
 				E916663C259BBFBD0003102F /* Main */,
 				E9166650259BC7020003102F /* Shared */,
 			);
@@ -673,10 +690,12 @@
 				E96315D3259CA32100AE8F2F /* WelcomeInteractor.swift in Sources */,
 				E96315D8259CA33000AE8F2F /* WelcomeRouter.swift in Sources */,
 				E9E6ECCD259B7EDE001B1FFF /* AppDelegate.swift in Sources */,
+				E9631638259D5E2C00AE8F2F /* CustomizedLabel.swift in Sources */,
 				E916664C259BC6FC0003102F /* GenericMessageView.swift in Sources */,
 				E9166671259BD2E80003102F /* StoryboardManager.swift in Sources */,
 				E96315DD259CA34000AE8F2F /* WelcomePresenter.swift in Sources */,
 				E963161C259D502A00AE8F2F /* UIColor+Brand.swift in Sources */,
+				E963162B259D5B0300AE8F2F /* CustomizedView.swift in Sources */,
 				E9E6ED1A259B80E4001B1FFF /* AppRouter.swift in Sources */,
 				E9166665259BD2470003102F /* CreateCounterViewController.swift in Sources */,
 				E963160A259D44E300AE8F2F /* CounterModel.swift in Sources */,
@@ -686,6 +705,7 @@
 				E9166660259BD2170003102F /* WelcomeViewController.swift in Sources */,
 				E96315E2259CA34F00AE8F2F /* WelcomeConfigurator.swift in Sources */,
 				E96315F4259CA9BF00AE8F2F /* MainInteractor.swift in Sources */,
+				E9631633259D5D3700AE8F2F /* CustomizedTextField.swift in Sources */,
 				E96315EA259CA9AD00AE8F2F /* MainConfigurator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
