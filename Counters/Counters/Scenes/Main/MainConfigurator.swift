@@ -11,13 +11,13 @@ struct MainConfigurator {
 
     static func configure(_ viewController: MainViewController) {
         //let service =    CategoryService()
-        //let interactor = MainInteractor(service: service)
+        let interactor = MainInteractor()
         let presenter = MainPresenter()
         let router = MainRouter()
-        //viewController.interactor = interactor
-        //interactor.presenter = presenter
+        viewController.interactor = interactor
+        interactor.presenter = presenter
         viewController.router = router
         router.viewController = viewController
-        //presenter.viewController = viewController
+        presenter.viewController = viewController
     }
 }

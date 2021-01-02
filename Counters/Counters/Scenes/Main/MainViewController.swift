@@ -8,6 +8,7 @@
 import UIKit
 
 protocol MainDisplayLogic: class {
+    func displayCounters(_ viewmodel: [MainViewModel])
 }
 
 final class MainViewController: UIViewController {
@@ -15,6 +16,8 @@ final class MainViewController: UIViewController {
     var interactor: (MainBusinessLogic & MainDataStore)?
     var router: MainRoutingLogic?
     var isopenSearch: Bool = false
+
+    private var dataProvider = MainDataProvider(rows: [])
 
     // MARK: - IBOutlets
 
@@ -56,6 +59,7 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        interactor?.prepareCountersList()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -65,12 +69,22 @@ final class MainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        navigationItem.hidesSearchBarWhenScrolling = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
+    }
+}
+
+// MARK: - MainDisplayLogic
+extension MainViewController: MainDisplayLogic {
+
+    func displayCounters(_ viewmodel: [MainViewModel]) {
+        dataProvider.update(rows: viewmodel)
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 }
 
@@ -87,17 +101,21 @@ private extension MainViewController {
                                          target: self,
                                          action: #selector(editCounters(sender:)))
         navigationItem.leftBarButtonItem = editButton
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Counters"
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
         searchController.delegate = self
         navigationItem.hidesSearchBarWhenScrolling = false
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
     func setupTableView() {
         tableView.layer.shadowOpacity = 0.05
         tableView.layer.shadowOffset = CGSize(width: 0, height: 3)
+        tableView.registerCells([CounterTableViewCell.self])
+        tableView.refreshControl = refreshControl
+        tableView.tableFooterView = UIView()
+        tableView.rowHeight = UITableView.automaticDimension
     }
 
     // MARK: - Actions
@@ -105,16 +123,19 @@ private extension MainViewController {
     @objc
     func refreshMain(sender _: UIRefreshControl) {
         refreshControl.endRefreshing()
+        interactor?.prepareCountersList()
     }
 
     @objc
     func editCounters(sender _: UIBarButtonItem) {
+        isEditing = true
+        tableView.reloadData()
     }
 
     @IBAction func didTapAction(_ sender: Any) {
         router?.navigateToNewCounter()
     }
-    
+
     @IBAction func didTapDelete(_ sender: Any) {
     }
 }
@@ -147,5 +168,55 @@ extension MainViewController: UISearchControllerDelegate {
             return
         }
         navigationItem.title = "Search result"
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension MainViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        dataProvider.numberOfSections()
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        dataProvider.numberOfItems(in: section)
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // swiftlint:disable:next force_unwrapping
+        let viewModel = self.dataProvider[indexPath]!
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CounterTableViewCell.reuseIdentifier) else {
+            fatalError("Main Section Cell Not Found - Reuse identifier: \(CounterTableViewCell.reuseIdentifier)")
+        }
+        guard let configurableCell = cell as? MainConfigurable else {
+            fatalError("Main Section Cell Must Conform with MainnConfigurable")
+        }
+        cell.isEditing = isEditing
+        configurableCell.configure(with: viewModel, parent: self)
+        return cell
+    }
+}
+
+// MARK: - CounterViewDelegate
+extension MainViewController: CounterViewDelegate {
+
+    func counterViewDidTapIncrementCounter(_ product: CounterModel) {
+        showAlert(title: "INCREMENT", message: "SUCC")
+    }
+
+    func counterViewDidTapDecrementCounter(_ product: CounterModel) {
+        showAlert(title: "DECREMENT", message: "SUCC")
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension MainViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isEditing {
+            let viewModel = self.dataProvider[indexPath]!
+            viewModel.counter.isSelected = !viewModel.counter.isSelected
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
     }
 }

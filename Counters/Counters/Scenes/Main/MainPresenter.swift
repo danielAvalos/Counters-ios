@@ -8,6 +8,7 @@
 import UIKit
 
 protocol MainPresentationLogic {
+    func presentResponse(_ response: MainResponse)
 }
 
 final class MainPresenter {
@@ -17,4 +18,11 @@ final class MainPresenter {
 // MARK: - MainPresentationLogic
 
 extension MainPresenter: MainPresentationLogic {
+
+    func presentResponse(_ response: MainResponse) {
+        let viewModel: [MainViewModel] = response.counters.map { (counterModel) -> MainViewModel in
+            MainViewModel(model: counterModel)
+        }
+        viewController?.displayCounters(viewModel)
+    }
 }

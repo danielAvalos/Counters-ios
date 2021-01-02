@@ -13,6 +13,8 @@ enum ColorsCustomized: String {
     case yellow = "yellowColor"
     case red = "redColor"
     case black = "blackColor"
+    case grayLightColor = "grayLightColor"
+    case white = "whiteColor"
 }
 
 extension UIColor {

@@ -6,10 +6,18 @@
 //
 
 import Foundation
+import Alamofire
 
 struct CounterModel: Codable {
 
+    static let entityName: String = "Counter"
+
     let id: String?
     let title: String?
-    let counter: Int?
+    var count: Int?
+    var isSelected: Bool = false
+
+    var asParams: Parameters {
+        return [ "title": title ?? ""] as [String: Any]
+    }
 }
