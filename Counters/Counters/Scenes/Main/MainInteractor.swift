@@ -15,6 +15,7 @@ protocol MainBusinessLogic {
     func select(counterModel: CounterModel)
     func deleteSelected()
     func shareCountersSelected()
+    func getCountersSelected() -> Int
     func incrementCounter(counter: CounterModel)
     func decrementCounter(counter: CounterModel)
 }
@@ -85,6 +86,10 @@ extension MainInteractor: MainBusinessLogic {
         isSearching = true
     }
 
+    func getCountersSelected() -> Int {
+        countersList.filter { $0.isSelected }.count
+    }
+
     func prepareCountersList() {
         guard !isEditing else {
             return
@@ -105,9 +110,12 @@ extension MainInteractor: MainBusinessLogic {
 
     func shareCountersSelected() {
         let countersListSelected = countersList.filter { $0.isSelected }
-        var textToShare = "counters:"
+        var textToShare = ""
         countersListSelected.forEach {
-            textToShare += $0.title ?? ""
+            if !textToShare.isEmpty {
+                textToShare += ", "
+            }
+            textToShare += "\($0.count) x \($0.title ?? "")"
         }
         guard textToShare.isEmpty else {
             presenter?.presentTextToShareResponse(textToShare)

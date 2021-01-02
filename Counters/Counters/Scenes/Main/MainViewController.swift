@@ -119,13 +119,19 @@ extension MainViewController: NavigationConfigureProtocol {
 extension MainViewController: MainDisplayLogic {
 
     func displayCountersShare(_ textToShare: String) {
-        guard let url = URL(string: textToShare) else {
-            return
-        }
-        UIApplication.shared.open(url) { (result) in
-            if result {
-            }
-        }
+        // set up activity view controller
+        let textToShare = [textToShare]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+
+        // exclude some activity types from the list (optional)
+        activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop,
+                                                         UIActivity.ActivityType.postToFacebook,
+                                                         UIActivity.ActivityType.copyToPasteboard,
+                                                         UIActivity.ActivityType.message]
+
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
     }
 
     func displayCounters(_ viewmodel: [MainViewModel], message: String) {
@@ -195,7 +201,8 @@ private extension MainViewController {
                                  y: UIScreen.main.bounds.height / 2,
                                  width: UIScreen.main.bounds.width,
                                  height: 0)
-        let deleteAction = UIAlertAction(title: "Delete 5 Counters",
+        let counterSelected = interactor?.getCountersSelected() ?? 0
+        let deleteAction = UIAlertAction(title: "Delete \(counterSelected) \(counterSelected > 1 ? "Counters" : "Counter")",
                                          style: .destructive) { [weak self] _ in
             self?.interactor?.deleteSelected()
         }
