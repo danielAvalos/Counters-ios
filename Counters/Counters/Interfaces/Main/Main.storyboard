@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,7 +20,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8Jd-Oe-0SK">
                                 <rect key="frame" x="0.0" y="44" width="414" height="764"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="QOh-nE-S6d" id="fWx-ns-LOs"/>
@@ -29,15 +30,15 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qMO-k9-2B2">
                                 <rect key="frame" x="0.0" y="816" width="414" height="46"/>
                                 <subviews>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sla-mL-5fO">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sla-mL-5fO">
                                         <rect key="frame" x="15" y="10" width="24" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="26" id="6c2-qI-nOX"/>
                                             <constraint firstAttribute="width" constant="24" id="YRH-pc-r19"/>
                                         </constraints>
+                                        <color key="tintColor" name="orangeColor"/>
                                         <state key="normal" image="trash" catalog="system"/>
                                         <connections>
-                                            <action selector="didTapAction:" destination="QOh-nE-S6d" eventType="touchUpInside" id="fOP-hC-o9B"/>
                                             <action selector="didTapDelete:" destination="QOh-nE-S6d" eventType="touchUpInside" id="X9a-HN-EkB"/>
                                         </connections>
                                     </button>
@@ -53,6 +54,7 @@
                                             <constraint firstAttribute="height" constant="26" id="3Ml-2s-Jlz"/>
                                             <constraint firstAttribute="width" constant="24" id="w6L-D5-TUg"/>
                                         </constraints>
+                                        <color key="tintColor" name="orangeColor"/>
                                         <state key="normal" image="plus" catalog="system"/>
                                         <connections>
                                             <action selector="didTapAction:" destination="QOh-nE-S6d" eventType="touchUpInside" id="dni-JS-0aa"/>
@@ -86,8 +88,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="addButton" destination="RTP-q0-Qjb" id="1GX-p5-UaU"/>
+                        <outlet property="actionButton" destination="RTP-q0-Qjb" id="1GX-p5-UaU"/>
                         <outlet property="addContainerView" destination="qMO-k9-2B2" id="y62-ge-WTc"/>
+                        <outlet property="deleteButton" destination="sla-mL-5fO" id="OPj-q4-686"/>
                         <outlet property="itemsSelectedLabel" destination="hbF-8X-daa" id="h9B-9r-uhL"/>
                         <outlet property="tableView" destination="8Jd-Oe-0SK" id="dkX-gw-pJE"/>
                     </connections>
@@ -100,11 +103,11 @@
     <resources>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="trash" catalog="system" width="121" height="128"/>
+        <namedColor name="orangeColor">
+            <color red="1" green="0.58399999141693115" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

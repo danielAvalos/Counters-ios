@@ -8,7 +8,8 @@
 import UIKit
 
 protocol MainDisplayLogic: class {
-    func displayCounters(_ viewmodel: [MainViewModel])
+    func displayCounters(_ viewmodel: [MainViewModel], message: String)
+    func displayCountersShare(_ textToShare: String)
 }
 
 final class MainViewController: UIViewController {
@@ -16,7 +17,6 @@ final class MainViewController: UIViewController {
     var interactor: (MainBusinessLogic & MainDataStore)?
     var router: MainRoutingLogic?
     var isopenSearch: Bool = false
-
     private var dataProvider = MainDataProvider(rows: [])
 
     // MARK: - IBOutlets
@@ -24,7 +24,16 @@ final class MainViewController: UIViewController {
     @IBOutlet private weak var itemsSelectedLabel: UILabel!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var addContainerView: UIView!
-    @IBOutlet private weak var addButton: UIButton!
+    @IBOutlet private weak var actionButton: UIButton! {
+        didSet {
+            actionButton.imageView?.tintColor = UIColor.color(named: .orange)
+        }
+    }
+    @IBOutlet private weak var deleteButton: UIButton! {
+        didSet {
+            deleteButton.imageView?.tintColor = UIColor.color(named: .orange)
+        }
+    }
 
     static func instantiate() -> UIViewController? {
         let storyboard = UIStoryboard(name: StoryboardName.main.rawValue,
@@ -65,10 +74,9 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigation()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        if CoreDataManager.isDataChanged {
+            interactor?.prepareCountersList()
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -77,11 +85,58 @@ final class MainViewController: UIViewController {
     }
 }
 
+// MARK: - NavigationConfigureProtocol
+extension MainViewController: NavigationConfigureProtocol {
+    func didTapBarItem(sender: UIBarButtonItem) {
+        switch sender.tag {
+        case BarButtonItemTag.edit.rawValue:
+            interactor?.isEditing = true
+            tableView.reloadData()
+            showLeftBarButtonItems(navigationItem: navigationItem, items: [.done])
+            showRightBarButtonItems(navigationItem: navigationItem, items: [.selectAll])
+            deleteButton.isHidden = false
+            actionButton.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        case BarButtonItemTag.selectAll.rawValue:
+            interactor?.select(isSelectAll: true)
+            showRightBarButtonItems(navigationItem: navigationItem, items: [.unselectAll])
+        case BarButtonItemTag.unselectAll.rawValue:
+            interactor?.select(isSelectAll: false)
+            showRightBarButtonItems(navigationItem: navigationItem, items: [.selectAll])
+        case BarButtonItemTag.done.rawValue:
+            interactor?.isEditing = false
+            tableView.reloadData()
+            deleteButton.isHidden = true
+            actionButton.setImage(UIImage(systemName: "plus"), for: .normal)
+            showLeftBarButtonItems(navigationItem: navigationItem, items: [.edit])
+            showRightBarButtonItems(navigationItem: navigationItem, items: [])
+        default:
+            break
+        }
+    }
+}
+
 // MARK: - MainDisplayLogic
 extension MainViewController: MainDisplayLogic {
 
-    func displayCounters(_ viewmodel: [MainViewModel]) {
+    func displayCountersShare(_ textToShare: String) {
+        guard let url = URL(string: textToShare) else {
+            return
+        }
+        UIApplication.shared.open(url) { (result) in
+            if result {
+            }
+        }
+    }
+
+    func displayCounters(_ viewmodel: [MainViewModel], message: String) {
         dataProvider.update(rows: viewmodel)
+        if !viewmodel.isEmpty && interactor?.isEditing == false {
+            showLeftBarButtonItems(navigationItem: navigationItem, items: [.edit])
+            itemsSelectedLabel.text = message
+            itemsSelectedLabel.isHidden = false
+        } else {
+            itemsSelectedLabel.isHidden = true
+        }
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
@@ -96,17 +151,13 @@ private extension MainViewController {
     }
 
     func setupNavigation() {
-        let editButton = UIBarButtonItem(title: "Edit",
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(editCounters(sender:)))
-        navigationItem.leftBarButtonItem = editButton
         navigationItem.title = "Counters"
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
         searchController.delegate = self
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationController?.navigationBar.prefersLargeTitles = true
+        deleteButton.isHidden = interactor?.isEditing == false
     }
 
     func setupTableView() {
@@ -122,21 +173,40 @@ private extension MainViewController {
 
     @objc
     func refreshMain(sender _: UIRefreshControl) {
-        refreshControl.endRefreshing()
         interactor?.prepareCountersList()
-    }
-
-    @objc
-    func editCounters(sender _: UIBarButtonItem) {
-        isEditing = true
-        tableView.reloadData()
+        refreshControl.endRefreshing()
     }
 
     @IBAction func didTapAction(_ sender: Any) {
-        router?.navigateToNewCounter()
+        if interactor?.isEditing == true {
+            interactor?.shareCountersSelected()
+        } else {
+            router?.navigateToNewCounter()
+        }
     }
 
     @IBAction func didTapDelete(_ sender: Any) {
+        let alertController = UIAlertController(title: nil,
+                                                message: nil,
+                                                preferredStyle: .actionSheet)
+        alertController
+            .popoverPresentationController?
+            .sourceRect = CGRect(x: 0,
+                                 y: UIScreen.main.bounds.height / 2,
+                                 width: UIScreen.main.bounds.width,
+                                 height: 0)
+        let deleteAction = UIAlertAction(title: "Delete 5 Counters",
+                                         style: .destructive) { [weak self] _ in
+            self?.interactor?.deleteSelected()
+        }
+        alertController.addAction(deleteAction)
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel,
+                                         handler: nil)
+        alertController.addAction(cancelAction)
+        present(alertController,
+                animated: true,
+                completion: nil)
     }
 }
 
@@ -171,6 +241,18 @@ extension MainViewController: UISearchControllerDelegate {
     }
 }
 
+// MARK: - CounterViewDelegate
+extension MainViewController: CounterViewDelegate {
+
+    func counterViewDidTapIncrementCounter(_ counter: CounterModel) {
+        interactor?.incrementCounter(counter: counter)
+    }
+
+    func counterViewDidTapDecrementCounter(_ counter: CounterModel) {
+        interactor?.decrementCounter(counter: counter)
+    }
+}
+
 // MARK: - UITableViewDataSource
 extension MainViewController: UITableViewDataSource {
 
@@ -191,21 +273,9 @@ extension MainViewController: UITableViewDataSource {
         guard let configurableCell = cell as? MainConfigurable else {
             fatalError("Main Section Cell Must Conform with MainnConfigurable")
         }
-        cell.isEditing = isEditing
+        cell.isEditing = interactor?.isEditing ?? false
         configurableCell.configure(with: viewModel, parent: self)
         return cell
-    }
-}
-
-// MARK: - CounterViewDelegate
-extension MainViewController: CounterViewDelegate {
-
-    func counterViewDidTapIncrementCounter(_ product: CounterModel) {
-        showAlert(title: "INCREMENT", message: "SUCC")
-    }
-
-    func counterViewDidTapDecrementCounter(_ product: CounterModel) {
-        showAlert(title: "DECREMENT", message: "SUCC")
     }
 }
 
@@ -213,9 +283,10 @@ extension MainViewController: CounterViewDelegate {
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if isEditing {
+        if interactor?.isEditing == true {
             let viewModel = self.dataProvider[indexPath]!
             viewModel.counter.isSelected = !viewModel.counter.isSelected
+            interactor?.select(counterModel: viewModel.counter)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }

@@ -11,10 +11,17 @@ import CoreData
 protocol MainBusinessLogic {
     func prepareCountersList()
     func filterContent(forQuery query: String?)
+    func select(isSelectAll: Bool)
+    func select(counterModel: CounterModel)
+    func deleteSelected()
+    func shareCountersSelected()
+    func incrementCounter(counter: CounterModel)
+    func decrementCounter(counter: CounterModel)
 }
 
 protocol MainDataStore {
     var isSearching: Bool { get set }
+    var isEditing: Bool { get set }
     var countersList: [CounterModel] { get }
 }
 
@@ -24,9 +31,10 @@ final class MainInteractor: MainDataStore {
 
     //private let service: CategoryService
 
-    // MARK: - HomeDataStore
+    // MARK: - MainDataStore
 
     var isSearching: Bool = false
+    var isEditing: Bool = false
     var countersList: [CounterModel] = []
 
     /*init(service: CategoryService) {
@@ -37,12 +45,37 @@ final class MainInteractor: MainDataStore {
 // MARK: - MainBusinessLogic
 
 extension MainInteractor: MainBusinessLogic {
+    func incrementCounter(counter: CounterModel) {
+        guard let index = countersList.firstIndex(where: { $0.id == counter.id && $0.title == counter.title }) else {
+            return
+        }
+        countersList[index].count += 1
+        if updateLocalCounter(model: countersList[index]) {
+            presenter?.presentCounterListResponse(createMainResponse(counterModel: countersList))
+        }
+    }
 
-    func prepareCountersList() {
-        isSearching = false
-        countersList = createLocalData()
-        let mainResponse = MainResponse(counters: countersList)
-        presenter?.presentResponse(mainResponse)
+    func decrementCounter(counter: CounterModel) {
+        guard let index = countersList.firstIndex(where: { $0.id == counter.id && $0.title == counter.title }) else {
+            return
+        }
+        countersList[index].count = counter.count > 1 ? counter.count - 1 : 0
+        if updateLocalCounter(model: countersList[index]) {
+            presenter?.presentCounterListResponse(createMainResponse(counterModel: countersList))
+        }
+    }
+
+    func deleteSelected() {
+        let dataToDelete = countersList.filter { $0.isSelected }
+        dataToDelete.forEach { (counterModel) in
+            guard let id = counterModel.id else {
+                return
+            }
+            if deleteLocalCounter(id: id) {
+                countersList.removeAll { $0.id == id }
+            }
+        }
+        presenter?.presentCounterListResponse(createMainResponse(counterModel: countersList))
     }
 
     func filterContent(forQuery query: String?) {
@@ -51,58 +84,68 @@ extension MainInteractor: MainBusinessLogic {
         }
         isSearching = true
     }
+
+    func prepareCountersList() {
+        guard !isEditing else {
+            return
+        }
+        isSearching = false
+        countersList = getLocalData()
+        presenter?.presentCounterListResponse(createMainResponse(counterModel: countersList))
+    }
+
+    func select(isSelectAll: Bool) {
+        let counterSelectAllList: [CounterModel] = countersList.map {
+            CounterModel(id: $0.id, title: $0.title, count: $0.count, isSelected: isSelectAll)
+        }
+        countersList.removeAll()
+        countersList.append(contentsOf: counterSelectAllList)
+        presenter?.presentCounterListResponse(createMainResponse(counterModel: countersList))
+    }
+
+    func shareCountersSelected() {
+        let countersListSelected = countersList.filter { $0.isSelected }
+        var textToShare = "counters:"
+        countersListSelected.forEach {
+            textToShare += $0.title ?? ""
+        }
+        guard textToShare.isEmpty else {
+            presenter?.presentTextToShareResponse(textToShare)
+            return
+        }
+    }
+
+    func select(counterModel: CounterModel) {
+        guard let index = countersList.firstIndex(where: { $0.id == counterModel.id && $0.title == counterModel.title }) else {
+            return
+        }
+        countersList[index].isSelected = counterModel.isSelected
+    }
 }
 
 // MARK: - Private functions
 
 private extension MainInteractor {
 
-    func createLocalData() -> [CounterModel] {
-        let counterModelListResult = getLocalData()
-        if countersList.isEmpty {
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return counterModelListResult }
-            let managedContext = appDelegate.persistentContainer.viewContext
-            guard let counterEntity = NSEntityDescription.entity(forEntityName: CounterModel.entityName, in: managedContext) else {
-                return countersList
-            }
-            for index in 11...15 {
-                let counter = NSManagedObject(entity: counterEntity, insertInto: managedContext)
-                counter.setValue("\(index)", forKey: "id")
-                counter.setValue("Number of times I’ve forgotten my mother’s name because I was high on Frugelés. \(index)", forKey: "title")
-                counter.setValue(0, forKey: "count")
-            }
-            do {
-                try managedContext.save()
-            } catch let error {
-                print("could not save \(error.localizedDescription)")
-            }
-        }
-        return getLocalData()
+    func createMainResponse(counterModel: [CounterModel]) -> MainResponse {
+        var sumCount = 0
+        let itemSelected = counterModel.filter {
+            sumCount += $0.count
+            return $0.count > 0
+        }.count
+        let message = "\(itemSelected) items · Counted \(sumCount) times"
+        return MainResponse(messageItemSelected: message, counters: counterModel)
     }
 
     func getLocalData() -> [CounterModel] {
-        var counterModelListResult: [CounterModel] = []
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return counterModelListResult }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: CounterModel.entityName)
-        do {
-            guard let result = try managedContext.fetch(fetchRequest) as? [NSManagedObject] else {
-                return counterModelListResult
-            }
-            result.forEach { (data) in
-                if let id = data.value(forKey: "id") as? String,
-                      let title = data.value(forKey: "title") as? String,
-                      let count = data.value(forKey: "count") as? Int {
-                    let counterModel = CounterModel(id: id,
-                                                    title: title,
-                                                    count: count)
-                    counterModelListResult.append(counterModel)
-                }
-            }
-        } catch let error {
-            print("could not save \(error.localizedDescription)")
-            return []
-        }
-        return counterModelListResult
+        return CoreDataManager.getLocalData()
+    }
+
+    func updateLocalCounter(model: CounterModel) -> Bool {
+        CoreDataManager.updateCounter(model: model)
+    }
+
+    func deleteLocalCounter(id: String) -> Bool {
+        CoreDataManager.deleteCounter(id: id)
     }
 }

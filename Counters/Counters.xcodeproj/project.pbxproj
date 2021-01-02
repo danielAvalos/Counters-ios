@@ -42,6 +42,22 @@
 		E963167925A0C9AC00AE8F2F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963167825A0C9AC00AE8F2F /* MainViewModel.swift */; };
 		E963167E25A0CB8400AE8F2F /* UITableViewCell+RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963167D25A0CB8400AE8F2F /* UITableViewCell+RegisterCell.swift */; };
 		E963168325A0CB9F00AE8F2F /* UITableView+RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963168225A0CB9F00AE8F2F /* UITableView+RegisterCell.swift */; };
+		E963169625A0E89600AE8F2F /* NavigationConfigureProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963169525A0E89600AE8F2F /* NavigationConfigureProtocol.swift */; };
+		E96316A425A0FDF700AE8F2F /* CreateCounterConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96316A325A0FDF700AE8F2F /* CreateCounterConfigurator.swift */; };
+		E96316AC25A0FE0D00AE8F2F /* CreateCounterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96316AB25A0FE0D00AE8F2F /* CreateCounterRouter.swift */; };
+		E96316B125A0FE1E00AE8F2F /* CreateCounterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96316B025A0FE1E00AE8F2F /* CreateCounterInteractor.swift */; };
+		E96316B625A0FE2A00AE8F2F /* CreateCounterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96316B525A0FE2A00AE8F2F /* CreateCounterPresenter.swift */; };
+		E96316C225A0FFE200AE8F2F /* CreateItemExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96316C125A0FFE200AE8F2F /* CreateItemExampleViewController.swift */; };
+		E96316D125A102E500AE8F2F /* CreateItemExamples.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96316D025A102E500AE8F2F /* CreateItemExamples.storyboard */; };
+		E96316D725A103FC00AE8F2F /* ItemExamplesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96316D525A103FC00AE8F2F /* ItemExamplesCollectionViewCell.swift */; };
+		E96316D825A103FC00AE8F2F /* ItemExamplesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E96316D625A103FC00AE8F2F /* ItemExamplesCollectionViewCell.xib */; };
+		E96316DE25A1042000AE8F2F /* ItemsCollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96316DC25A1042000AE8F2F /* ItemsCollectionTableViewCell.swift */; };
+		E96316DF25A1042000AE8F2F /* ItemsCollectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E96316DD25A1042000AE8F2F /* ItemsCollectionTableViewCell.xib */; };
+		E96316EB25A1094800AE8F2F /* CreateCounterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96316EA25A1094800AE8F2F /* CreateCounterResponse.swift */; };
+		E96316F125A10B1500AE8F2F /* CreateCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96316F025A10B1500AE8F2F /* CreateCounterViewModel.swift */; };
+		E96316F725A10E9A00AE8F2F /* CreateItemExampleDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96316F625A10E9A00AE8F2F /* CreateItemExampleDataProvider.swift */; };
+		E96316FF25A10EF100AE8F2F /* CreateItemExampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96316FE25A10EF100AE8F2F /* CreateItemExampleViewModel.swift */; };
+		E963170E25A1286400AE8F2F /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963170D25A1286400AE8F2F /* CoreDataManager.swift */; };
 		E9E6ECCD259B7EDE001B1FFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E6ECCC259B7EDE001B1FFF /* AppDelegate.swift */; };
 		E9E6ECCF259B7EDE001B1FFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E6ECCE259B7EDE001B1FFF /* SceneDelegate.swift */; };
 		E9E6ECD7259B7EDF001B1FFF /* Counters.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9E6ECD5259B7EDF001B1FFF /* Counters.xcdatamodeld */; };
@@ -113,6 +129,22 @@
 		E963167825A0C9AC00AE8F2F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		E963167D25A0CB8400AE8F2F /* UITableViewCell+RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+RegisterCell.swift"; sourceTree = "<group>"; };
 		E963168225A0CB9F00AE8F2F /* UITableView+RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+RegisterCell.swift"; sourceTree = "<group>"; };
+		E963169525A0E89600AE8F2F /* NavigationConfigureProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigureProtocol.swift; sourceTree = "<group>"; };
+		E96316A325A0FDF700AE8F2F /* CreateCounterConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCounterConfigurator.swift; sourceTree = "<group>"; };
+		E96316AB25A0FE0D00AE8F2F /* CreateCounterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCounterRouter.swift; sourceTree = "<group>"; };
+		E96316B025A0FE1E00AE8F2F /* CreateCounterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCounterInteractor.swift; sourceTree = "<group>"; };
+		E96316B525A0FE2A00AE8F2F /* CreateCounterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCounterPresenter.swift; sourceTree = "<group>"; };
+		E96316C125A0FFE200AE8F2F /* CreateItemExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemExampleViewController.swift; sourceTree = "<group>"; };
+		E96316D025A102E500AE8F2F /* CreateItemExamples.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateItemExamples.storyboard; sourceTree = "<group>"; };
+		E96316D525A103FC00AE8F2F /* ItemExamplesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemExamplesCollectionViewCell.swift; sourceTree = "<group>"; };
+		E96316D625A103FC00AE8F2F /* ItemExamplesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemExamplesCollectionViewCell.xib; sourceTree = "<group>"; };
+		E96316DC25A1042000AE8F2F /* ItemsCollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsCollectionTableViewCell.swift; sourceTree = "<group>"; };
+		E96316DD25A1042000AE8F2F /* ItemsCollectionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemsCollectionTableViewCell.xib; sourceTree = "<group>"; };
+		E96316EA25A1094800AE8F2F /* CreateCounterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCounterResponse.swift; sourceTree = "<group>"; };
+		E96316F025A10B1500AE8F2F /* CreateCounterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCounterViewModel.swift; sourceTree = "<group>"; };
+		E96316F625A10E9A00AE8F2F /* CreateItemExampleDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemExampleDataProvider.swift; sourceTree = "<group>"; };
+		E96316FE25A10EF100AE8F2F /* CreateItemExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemExampleViewModel.swift; sourceTree = "<group>"; };
+		E963170D25A1286400AE8F2F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		E9E6ECC9259B7EDE001B1FFF /* Counters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Counters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9E6ECCC259B7EDE001B1FFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9E6ECCE259B7EDE001B1FFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -188,6 +220,8 @@
 			isa = PBXGroup;
 			children = (
 				E916663D259BC00A0003102F /* CounterTableViewCell.swift */,
+				E96316D525A103FC00AE8F2F /* ItemExamplesCollectionViewCell.swift */,
+				E96316DC25A1042000AE8F2F /* ItemsCollectionTableViewCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -211,6 +245,7 @@
 		E9166656259BD19B0003102F /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				E96316C025A0FFBA00AE8F2F /* CreateItemExample */,
 				E9166669259BD25F0003102F /* CreateCounter */,
 				E96315E9259CA9AD00AE8F2F /* MainConfigurator.swift */,
 				E96315F3259CA9BF00AE8F2F /* MainInteractor.swift */,
@@ -243,6 +278,10 @@
 		E9166669259BD25F0003102F /* CreateCounter */ = {
 			isa = PBXGroup;
 			children = (
+				E96316A325A0FDF700AE8F2F /* CreateCounterConfigurator.swift */,
+				E96316B025A0FE1E00AE8F2F /* CreateCounterInteractor.swift */,
+				E96316B525A0FE2A00AE8F2F /* CreateCounterPresenter.swift */,
+				E96316AB25A0FE0D00AE8F2F /* CreateCounterRouter.swift */,
 				E9166664259BD2470003102F /* CreateCounterViewController.swift */,
 			);
 			path = CreateCounter;
@@ -252,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				E9166670259BD2E80003102F /* StoryboardManager.swift */,
+				E963170D25A1286400AE8F2F /* CoreDataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -285,11 +325,47 @@
 		E963165E25A0C81C00AE8F2F /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				E96316F525A10E7300AE8F2F /* CreateItemExamples */,
+				E96316E925A1090500AE8F2F /* CreateCounter */,
 				E963166725A0C87E00AE8F2F /* MainResponse.swift */,
 				E963167325A0C98B00AE8F2F /* MainDataProvider.swift */,
 				E963167825A0C9AC00AE8F2F /* MainViewModel.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		E963169425A0E86D00AE8F2F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				E963169525A0E89600AE8F2F /* NavigationConfigureProtocol.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		E96316C025A0FFBA00AE8F2F /* CreateItemExample */ = {
+			isa = PBXGroup;
+			children = (
+				E96316C125A0FFE200AE8F2F /* CreateItemExampleViewController.swift */,
+			);
+			path = CreateItemExample;
+			sourceTree = "<group>";
+		};
+		E96316E925A1090500AE8F2F /* CreateCounter */ = {
+			isa = PBXGroup;
+			children = (
+				E96316EA25A1094800AE8F2F /* CreateCounterResponse.swift */,
+				E96316F025A10B1500AE8F2F /* CreateCounterViewModel.swift */,
+			);
+			path = CreateCounter;
+			sourceTree = "<group>";
+		};
+		E96316F525A10E7300AE8F2F /* CreateItemExamples */ = {
+			isa = PBXGroup;
+			children = (
+				E96316F625A10E9A00AE8F2F /* CreateItemExampleDataProvider.swift */,
+				E96316FE25A10EF100AE8F2F /* CreateItemExampleViewModel.swift */,
+			);
+			path = CreateItemExamples;
 			sourceTree = "<group>";
 		};
 		E9E6ECC0259B7EDE001B1FFF = {
@@ -390,6 +466,7 @@
 		E9E6ED10259B8013001B1FFF /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				E963169425A0E86D00AE8F2F /* Common */,
 				E9166656259BD19B0003102F /* Main */,
 				E9166657259BD1A20003102F /* Shared */,
 				E9166658259BD1C60003102F /* Welcome */,
@@ -466,8 +543,11 @@
 		E9E6ED39259B91D7001B1FFF /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				E916663E259BC00A0003102F /* CounterTableViewCell.xib */,
 				E9E6ED47259B925E001B1FFF /* CreateCounter.storyboard */,
+				E96316D025A102E500AE8F2F /* CreateItemExamples.storyboard */,
+				E916663E259BC00A0003102F /* CounterTableViewCell.xib */,
+				E96316D625A103FC00AE8F2F /* ItemExamplesCollectionViewCell.xib */,
+				E96316DD25A1042000AE8F2F /* ItemsCollectionTableViewCell.xib */,
 				E9E6ED42259B9235001B1FFF /* Main.storyboard */,
 			);
 			path = Main;
@@ -585,9 +665,12 @@
 				E9E6ECDC259B7EE7001B1FFF /* LaunchScreen.storyboard in Resources */,
 				E9E6ED43259B9235001B1FFF /* Main.storyboard in Resources */,
 				E9E6ED3B259B9214001B1FFF /* Welcome.storyboard in Resources */,
+				E96316DF25A1042000AE8F2F /* ItemsCollectionTableViewCell.xib in Resources */,
 				E9166640259BC00A0003102F /* CounterTableViewCell.xib in Resources */,
 				E9166652259BC7180003102F /* GenericMessageView.xib in Resources */,
 				E9631614259D4F2100AE8F2F /* Colors.xcassets in Resources */,
+				E96316D825A103FC00AE8F2F /* ItemExamplesCollectionViewCell.xib in Resources */,
+				E96316D125A102E500AE8F2F /* CreateItemExamples.storyboard in Resources */,
 				E9E6ECD9259B7EE7001B1FFF /* Assets.xcassets in Resources */,
 				E9E6ED48259B925E001B1FFF /* CreateCounter.storyboard in Resources */,
 			);
@@ -738,32 +821,45 @@
 				E96315EF259CA9B700AE8F2F /* MainRouter.swift in Sources */,
 				E916663F259BC00A0003102F /* CounterTableViewCell.swift in Sources */,
 				E963160F259D481800AE8F2F /* UIViewController+Alerts.swift in Sources */,
+				E96316B125A0FE1E00AE8F2F /* CreateCounterInteractor.swift in Sources */,
 				E96315D3259CA32100AE8F2F /* WelcomeInteractor.swift in Sources */,
 				E96315D8259CA33000AE8F2F /* WelcomeRouter.swift in Sources */,
 				E963167E25A0CB8400AE8F2F /* UITableViewCell+RegisterCell.swift in Sources */,
+				E963170E25A1286400AE8F2F /* CoreDataManager.swift in Sources */,
+				E96316C225A0FFE200AE8F2F /* CreateItemExampleViewController.swift in Sources */,
 				E9E6ECCD259B7EDE001B1FFF /* AppDelegate.swift in Sources */,
+				E963169625A0E89600AE8F2F /* NavigationConfigureProtocol.swift in Sources */,
 				E9631638259D5E2C00AE8F2F /* CustomizedLabel.swift in Sources */,
 				E963165A25A0C03900AE8F2F /* CountersService.swift in Sources */,
+				E96316FF25A10EF100AE8F2F /* CreateItemExampleViewModel.swift in Sources */,
+				E96316A425A0FDF700AE8F2F /* CreateCounterConfigurator.swift in Sources */,
 				E916664C259BC6FC0003102F /* GenericMessageView.swift in Sources */,
 				E963166E25A0C96300AE8F2F /* DataProvider.swift in Sources */,
 				E9166671259BD2E80003102F /* StoryboardManager.swift in Sources */,
 				E96315DD259CA34000AE8F2F /* WelcomePresenter.swift in Sources */,
+				E96316F725A10E9A00AE8F2F /* CreateItemExampleDataProvider.swift in Sources */,
 				E963161C259D502A00AE8F2F /* UIColor+Brand.swift in Sources */,
 				E963162B259D5B0300AE8F2F /* CustomizedView.swift in Sources */,
 				E9E6ED1A259B80E4001B1FFF /* AppRouter.swift in Sources */,
 				E9166665259BD2470003102F /* CreateCounterViewController.swift in Sources */,
 				E963167425A0C98B00AE8F2F /* MainDataProvider.swift in Sources */,
+				E96316AC25A0FE0D00AE8F2F /* CreateCounterRouter.swift in Sources */,
 				E963160A259D44E300AE8F2F /* CounterModel.swift in Sources */,
 				E916666B259BD27B0003102F /* MainViewController.swift in Sources */,
 				E9E6ECCF259B7EDE001B1FFF /* SceneDelegate.swift in Sources */,
+				E96316EB25A1094800AE8F2F /* CreateCounterResponse.swift in Sources */,
 				E96315F9259CA9CD00AE8F2F /* MainPresenter.swift in Sources */,
 				E963166825A0C87E00AE8F2F /* MainResponse.swift in Sources */,
 				E9166660259BD2170003102F /* WelcomeViewController.swift in Sources */,
+				E96316B625A0FE2A00AE8F2F /* CreateCounterPresenter.swift in Sources */,
+				E96316DE25A1042000AE8F2F /* ItemsCollectionTableViewCell.swift in Sources */,
 				E963166F25A0C96300AE8F2F /* ArrayDataProvider.swift in Sources */,
 				E96315E2259CA34F00AE8F2F /* WelcomeConfigurator.swift in Sources */,
+				E96316F125A10B1500AE8F2F /* CreateCounterViewModel.swift in Sources */,
 				E963168325A0CB9F00AE8F2F /* UITableView+RegisterCell.swift in Sources */,
 				E96315F4259CA9BF00AE8F2F /* MainInteractor.swift in Sources */,
 				E963164B25A0B33900AE8F2F /* APIManager.swift in Sources */,
+				E96316D725A103FC00AE8F2F /* ItemExamplesCollectionViewCell.swift in Sources */,
 				E9631633259D5D3700AE8F2F /* CustomizedTextField.swift in Sources */,
 				E96315EA259CA9AD00AE8F2F /* MainConfigurator.swift in Sources */,
 				E963167925A0C9AC00AE8F2F /* MainViewModel.swift in Sources */,

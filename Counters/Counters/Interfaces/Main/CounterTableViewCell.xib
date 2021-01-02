@@ -95,41 +95,43 @@
                                                                         <rect key="frame" x="0.0" y="36" width="166" height="24"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P70-5u-i3q">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="65" height="24"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="45" height="24"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             </view>
                                                                             <view contentMode="scaleToFill" horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="03a-Fv-NmP" customClass="CustomizedView" customModule="Counters" customModuleProvider="target">
-                                                                                <rect key="frame" x="75" y="0.0" width="91" height="24"/>
+                                                                                <rect key="frame" x="55" y="0.0" width="111" height="24"/>
                                                                                 <subviews>
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="xBB-6l-kLp">
-                                                                                        <rect key="frame" x="10" y="2" width="71" height="20"/>
+                                                                                        <rect key="frame" x="0.0" y="2" width="111" height="20"/>
                                                                                         <subviews>
                                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qg7-Zm-ABL">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="20"/>
                                                                                                 <constraints>
-                                                                                                    <constraint firstAttribute="width" secondItem="Qg7-Zm-ABL" secondAttribute="height" multiplier="1:1" id="64l-Zd-0j5"/>
-                                                                                                    <constraint firstAttribute="width" constant="20" id="Qqo-x2-Qfd"/>
+                                                                                                    <constraint firstAttribute="width" secondItem="Qg7-Zm-ABL" secondAttribute="height" multiplier="2:1" id="64l-Zd-0j5"/>
+                                                                                                    <constraint firstAttribute="width" constant="40" id="Qqo-x2-Qfd"/>
                                                                                                 </constraints>
                                                                                                 <color key="tintColor" name="blackColor"/>
+                                                                                                <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                                                                 <state key="normal" image="minus" catalog="system"/>
                                                                                                 <connections>
                                                                                                     <action selector="didTapMinusCounter:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="VJf-kP-BOX"/>
                                                                                                 </connections>
                                                                                             </button>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iz6-x3-2GE">
-                                                                                                <rect key="frame" x="35" y="0.0" width="1" height="20"/>
+                                                                                                <rect key="frame" x="55" y="0.0" width="1" height="20"/>
                                                                                                 <color key="backgroundColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                                 <constraints>
                                                                                                     <constraint firstAttribute="width" constant="1" id="a3C-2m-HKH"/>
                                                                                                 </constraints>
                                                                                             </view>
                                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ut-wx-kW6">
-                                                                                                <rect key="frame" x="51" y="0.0" width="20" height="20"/>
+                                                                                                <rect key="frame" x="71" y="0.0" width="40" height="20"/>
                                                                                                 <constraints>
-                                                                                                    <constraint firstAttribute="width" secondItem="5Ut-wx-kW6" secondAttribute="height" multiplier="1:1" id="hf0-Ip-KrE"/>
+                                                                                                    <constraint firstAttribute="width" secondItem="5Ut-wx-kW6" secondAttribute="height" multiplier="2:1" id="hf0-Ip-KrE"/>
                                                                                                 </constraints>
                                                                                                 <color key="tintColor" name="blackColor"/>
-                                                                                                <state key="normal" title="Button" image="plus" catalog="system"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                                                                                <state key="normal" image="plus" catalog="system"/>
                                                                                                 <connections>
                                                                                                     <action selector="didTapPlusCounter:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="EyK-88-o1l"/>
                                                                                                 </connections>
@@ -144,8 +146,8 @@
                                                                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                                                 <constraints>
                                                                                     <constraint firstItem="xBB-6l-kLp" firstAttribute="top" secondItem="03a-Fv-NmP" secondAttribute="top" constant="2" id="42q-9x-wsc"/>
-                                                                                    <constraint firstItem="xBB-6l-kLp" firstAttribute="leading" secondItem="03a-Fv-NmP" secondAttribute="leading" constant="10" id="HiE-v5-hM5"/>
-                                                                                    <constraint firstAttribute="trailing" secondItem="xBB-6l-kLp" secondAttribute="trailing" constant="10" id="Zb8-tG-Izz"/>
+                                                                                    <constraint firstItem="xBB-6l-kLp" firstAttribute="leading" secondItem="03a-Fv-NmP" secondAttribute="leading" id="HiE-v5-hM5"/>
+                                                                                    <constraint firstAttribute="trailing" secondItem="xBB-6l-kLp" secondAttribute="trailing" id="Zb8-tG-Izz"/>
                                                                                     <constraint firstAttribute="bottom" secondItem="xBB-6l-kLp" secondAttribute="bottom" constant="2" id="p5z-Zy-XAv"/>
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>

@@ -8,5 +8,6 @@
 import Foundation
 
 struct MainResponse {
+    let messageItemSelected: String
     let counters: [CounterModel]
 }

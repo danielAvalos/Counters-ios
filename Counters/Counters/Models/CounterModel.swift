@@ -14,7 +14,7 @@ struct CounterModel: Codable {
 
     let id: String?
     let title: String?
-    var count: Int?
+    var count: Int = 0
     var isSelected: Bool = false
 
     var asParams: Parameters {

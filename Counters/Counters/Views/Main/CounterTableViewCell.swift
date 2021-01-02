@@ -8,8 +8,8 @@
 import UIKit
 
 protocol CounterViewDelegate: class {
-    func counterViewDidTapIncrementCounter(_ product: CounterModel)
-    func counterViewDidTapDecrementCounter(_ product: CounterModel)
+    func counterViewDidTapIncrementCounter(_ counter: CounterModel)
+    func counterViewDidTapDecrementCounter(_ counter: CounterModel)
 }
 
 final class CounterTableViewCell: UITableViewCell {
@@ -85,8 +85,10 @@ extension CounterTableViewCell: MainConfigurable {
             }
         }
         containerCheckView.isHidden = !isEditing
-        quantityLabel.text = "\(counterModel.count ?? 0)"
+        quantityLabel.text = "\(counterModel.count)"
         nameLabel.text = counterModel.title
         delegate = parent as? CounterViewDelegate
+        quantityLabel.textColor = counterModel.count == 0 ? UIColor.color(named: .grayLightColor) :
+            UIColor.color(named: .orange)
     }
 }

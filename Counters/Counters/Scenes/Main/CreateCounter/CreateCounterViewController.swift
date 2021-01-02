@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol CreateCounterDisplayLogic: class {
+    func displaySavedStatus(viewModel: CreateCounterViewModel)
+}
+
 final class CreateCounterViewController: UIViewController {
 
-    // MARK: - IBOutlets
+    var interactor: CreateCounterBusinessLogic?
+    var router: CreateCounterRoutingLogic?
 
+    // MARK: - IBOutlets
     @IBOutlet private weak var nameTextField: UITextField!
     @IBOutlet private weak var moreExamplesButton: UIButton!
 
@@ -39,38 +45,50 @@ final class CreateCounterViewController: UIViewController {
     }
 }
 
+// MARK: - NavigationConfigureProtocol
+extension CreateCounterViewController: NavigationConfigureProtocol {
+    func didTapBarItem(sender: UIBarButtonItem) {
+        switch sender.tag {
+        case BarButtonItemTag.cancel.rawValue:
+            router?.navigatePopViewController()
+            navigationController?.popViewController(animated: true)
+        case BarButtonItemTag.save.rawValue:
+            interactor?.saveCounter(title: nameTextField.text ?? "")
+        default:
+            break
+        }
+    }
+}
+
+// MARK: - CreateCounterDisplayLogic
+extension CreateCounterViewController: CreateCounterDisplayLogic {
+    func displaySavedStatus(viewModel: CreateCounterViewModel) {
+        showAlert(title: viewModel.title, message: viewModel.message, customActionTitle: "OK") { [weak self] _ in
+            if viewModel.status == .successful {
+                self?.router?.navigatePopViewController()
+            }
+        }
+    }
+}
+
 // MARK: - Private functions
 
 private extension CreateCounterViewController {
 
     func setup() {
+        CreateCounterConfigurator.configure(self)
     }
 
     func setupNavigation() {
-        navigationItem.backButtonTitle = "Cancel"
-        let saveButton = UIBarButtonItem(title: "Save",
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(saveCounter(sender:)))
-        let cancelButton = UIBarButtonItem(title: "Cancel",
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(cancelCounter(sender:)))
-        navigationItem.rightBarButtonItem = saveButton
-        navigationItem.leftBarButtonItem = cancelButton
+        showLeftBarButtonItems(navigationItem: navigationItem,
+                               items: [.cancel])
+        showRightBarButtonItems(navigationItem: navigationItem,
+                                items: [.save])
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.title = "Create a counter"
     }
 
-    @objc
-    func saveCounter(sender _: UIBarButtonItem) {
-        showAlert(title: "Successful", message: "Counter Saved", customActionTitle: "OK") { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        }
-    }
-
-    @objc
-    func cancelCounter(sender _: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
+    @IBAction func didTapMoreExamples(_ sender: Any) {
+        router?.navigateToShowExample()
     }
 }

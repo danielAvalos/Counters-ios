@@ -8,7 +8,8 @@
 import UIKit
 
 protocol MainPresentationLogic {
-    func presentResponse(_ response: MainResponse)
+    func presentCounterListResponse(_ response: MainResponse)
+    func presentTextToShareResponse(_ response: String)
 }
 
 final class MainPresenter {
@@ -19,10 +20,14 @@ final class MainPresenter {
 
 extension MainPresenter: MainPresentationLogic {
 
-    func presentResponse(_ response: MainResponse) {
+    func presentTextToShareResponse(_ response: String) {
+        viewController?.displayCountersShare(response)
+    }
+
+    func presentCounterListResponse(_ response: MainResponse) {
         let viewModel: [MainViewModel] = response.counters.map { (counterModel) -> MainViewModel in
             MainViewModel(model: counterModel)
         }
-        viewController?.displayCounters(viewModel)
+        viewController?.displayCounters(viewModel, message: response.messageItemSelected)
     }
 }
