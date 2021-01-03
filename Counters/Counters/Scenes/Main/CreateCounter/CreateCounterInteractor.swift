@@ -12,11 +12,20 @@ protocol CreateCounterBusinessLogic {
     func saveCounter(title: String)
 }
 
-// MARK: - CreateCounterBusinessLogic
-
-final class CreateCounterInteractor: CreateCounterBusinessLogic {
+final class CreateCounterInteractor {
 
     var presenter: CreateCounterPresentationLogic?
+
+    private let service: CountersService
+
+    init(service: CountersService) {
+        self.service = service
+    }
+}
+
+// MARK: - CreateCounterBusinessLogic
+
+extension CreateCounterInteractor: CreateCounterBusinessLogic {
 
     func saveCounter(title: String) {
         guard !title.replacingOccurrences(of: " ", with: "").isEmpty else {
@@ -24,12 +33,20 @@ final class CreateCounterInteractor: CreateCounterBusinessLogic {
             presenter?.presentStatusSaved(response: response)
             return
         }
-        if CoreDataManager.saveCounter(title: title) {
-            let response = CreateCounterResponse(status: .successful, message: "Counter Created")
-            presenter?.presentStatusSaved(response: response)
-        } else {
-            let response = CreateCounterResponse(status: .error, message: "The counter could not be created, try later")
-            presenter?.presentStatusSaved(response: response)
+        let counterModel = CounterModel(id: nil, title: title)
+        service.createCounter(model: counterModel) { [weak self] (_, error) in
+            if error == nil {
+                if CoreDataManager.saveCounter(title: title) {
+                    let response = CreateCounterResponse(status: .successful, message: "Counter Created")
+                    self?.presenter?.presentStatusSaved(response: response)
+                } else {
+                    let response = CreateCounterResponse(status: .error, message: "The counter could not be created, try later")
+                    self?.presenter?.presentStatusSaved(response: response)
+                }
+            } else {
+                let response = CreateCounterResponse(status: .error, message: error?.description ?? "")
+                self?.presenter?.presentStatusSaved(response: response)
+            }
         }
     }
 }

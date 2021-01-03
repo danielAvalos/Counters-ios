@@ -9,6 +9,8 @@ import Reachability
 
 struct ReachabilityManager {
 
+    static let shared = ReachabilityManager()
+
     ///returns the current state of the connection
     var isConnected: Bool {
         do {

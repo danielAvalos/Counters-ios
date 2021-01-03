@@ -36,14 +36,14 @@ enum APIRouter: URLRequestConvertible {
         case .incrementCounter:
             return "/api/v1/counter/inc"
         case .decrementCounter:
-            return "api/v1/counter/dec"
+            return "/api/v1/counter/dec"
         }
     }
 
-    var parameters: Parameters {
+    var parameters: Parameters? {
         switch self {
         case .getCounters:
-            return [:]
+            return nil
         case let .addCounter(counter),
              let .incrementCounter(counter),
              let .decrementCounter(counter):
@@ -67,23 +67,8 @@ enum APIRouter: URLRequestConvertible {
         urlRequest = try encoding.encode(urlRequest, with: parameters)
         return urlRequest
     }
-
-    func asURLString() -> String {
-        do {
-            let url = try Config.apiBaseUrl.asURL().appendingPathComponent(path).absoluteString
-            return url
-        } catch {
-            return ""
-        }
-    }
-
-    func asURL() -> URL {
-        let urlString = Config.apiBaseUrl.appending(path).replacingOccurrences(of: " ", with: "%20")
-        // swiftlint:disable:next force_unwrapping
-        return URL(string: urlString)!
-    }
 }
 
 struct Config {
-    static let apiBaseUrl = "http://localhost:3000/"
+    static let apiBaseUrl = "http://localhost:3000"
 }

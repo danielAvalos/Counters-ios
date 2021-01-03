@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-struct CounterModel: Codable {
+struct CounterModel {
 
     static let entityName: String = "Counter"
 
@@ -23,5 +23,14 @@ struct CounterModel: Codable {
             params["id"] = id
         }
         return params
+    }
+}
+
+extension CounterModel: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case count
     }
 }

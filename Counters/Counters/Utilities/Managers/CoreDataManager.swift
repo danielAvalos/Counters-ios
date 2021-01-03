@@ -69,7 +69,7 @@ struct CoreDataManager {
         fetchRequest.predicate = NSPredicate(format: "id = %@", id)
         do {
             let result = try managedContext.fetch(fetchRequest)
-            guard let objectToUpdate = result[0] as? NSManagedObject else {
+            guard !result.isEmpty, let objectToUpdate = result[0] as? NSManagedObject else {
                 return false
             }
             objectToUpdate.setValue(model.count, forKey: "count")
@@ -93,7 +93,7 @@ struct CoreDataManager {
         fetchRequest.predicate = NSPredicate(format: "id = %@", id)
         do {
             let result = try managedContext.fetch(fetchRequest)
-            guard let objectToDelete = result[0] as? NSManagedObject else {
+            guard !result.isEmpty, let objectToDelete = result[0] as? NSManagedObject else {
                 return false
             }
             managedContext.delete(objectToDelete)

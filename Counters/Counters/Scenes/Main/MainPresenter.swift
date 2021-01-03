@@ -1,6 +1,6 @@
 //
 //  MainPresenter.swift
-//  Counters
+//  Counters(
 //
 //  Created by DESARROLLO on 30/12/20.
 //
@@ -8,8 +8,10 @@
 import UIKit
 
 protocol MainPresentationLogic {
+    func presentError(_ response: ErrorModel)
     func presentCounterListResponse(_ response: MainResponse)
     func presentTextToShareResponse(_ response: String)
+    func presentCounterUpdatedResponse(_ response: MainResponse)
 }
 
 final class MainPresenter {
@@ -19,6 +21,12 @@ final class MainPresenter {
 // MARK: - MainPresentationLogic
 
 extension MainPresenter: MainPresentationLogic {
+
+    func presentCounterUpdatedResponse(_ response: MainResponse) {
+    }
+
+    func presentError(_ response: ErrorModel) {
+    }
 
     func presentTextToShareResponse(_ response: String) {
         viewController?.displayCountersShare(response)

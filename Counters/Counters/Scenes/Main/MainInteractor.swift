@@ -30,7 +30,7 @@ final class MainInteractor: MainDataStore {
 
     var presenter: MainPresentationLogic?
 
-    //private let service: CategoryService
+    private let service: CountersService
 
     // MARK: - MainDataStore
 
@@ -38,9 +38,9 @@ final class MainInteractor: MainDataStore {
     var isEditing: Bool = false
     var countersList: [CounterModel] = []
 
-    /*init(service: CategoryService) {
+    init(service: CountersService) {
         self.service = service
-    }*/
+    }
 }
 
 // MARK: - MainBusinessLogic
@@ -51,8 +51,17 @@ extension MainInteractor: MainBusinessLogic {
             return
         }
         countersList[index].count += 1
-        if updateLocalCounter(model: countersList[index]) {
-            presenter?.presentCounterListResponse(createMainResponse(counterModel: countersList))
+        service.incrementCounter(model: countersList[index]) { [weak self] (model, error) in
+            if error == nil {
+                guard let strongSelf = self,
+                      let model = self?.countersList[index] else {
+                    return
+                }
+                if strongSelf.updateLocalCounter(model: model) {
+                    strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
+                }
+            } else {
+            }
         }
     }
 
@@ -61,22 +70,39 @@ extension MainInteractor: MainBusinessLogic {
             return
         }
         countersList[index].count = counter.count > 1 ? counter.count - 1 : 0
-        if updateLocalCounter(model: countersList[index]) {
-            presenter?.presentCounterListResponse(createMainResponse(counterModel: countersList))
+        service.decrementCounter(model: countersList[index]) { [weak self] (model, error) in
+            if error == nil {
+                guard let strongSelf = self,
+                      let model = self?.countersList[index] else {
+                    return
+                }
+                if strongSelf.updateLocalCounter(model: model) {
+                    strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
+                }
+            } else {
+            }
         }
     }
 
     func deleteSelected() {
         let dataToDelete = countersList.filter { $0.isSelected }
-        dataToDelete.forEach { (counterModel) in
-            guard let id = counterModel.id else {
+        guard let firstToDelete = dataToDelete.first else {
+            return
+        }
+        service.deleteCounter(model: firstToDelete) { [weak self] (_, error) in
+            guard let strongSelf = self,
+                  let id = firstToDelete.id else {
                 return
             }
-            if deleteLocalCounter(id: id) {
-                countersList.removeAll { $0.id == id }
+            if error == nil {
+                if strongSelf.deleteLocalCounter(id: id) {
+                    strongSelf.countersList.removeAll { $0.id == id }
+                }
+                strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
+            } else {
+                strongSelf.presenter?.presentError(ErrorModel(code: .errorServer, descriptionLocalizable: error?.description))
             }
         }
-        presenter?.presentCounterListResponse(createMainResponse(counterModel: countersList))
     }
 
     func filterContent(forQuery query: String?) {
@@ -99,8 +125,23 @@ extension MainInteractor: MainBusinessLogic {
             return
         }
         isSearching = false
-        countersList = getLocalData()
-        presenter?.presentCounterListResponse(createMainResponse(counterModel: countersList))
+        if ReachabilityManager.shared.isConnected {
+            service.fetchCounters { [weak self] (model, error) in
+                if error == nil {
+                    guard let model = model, !model.isEmpty else {
+                        self?.presenter?.presentTextToShareResponse("")
+                        return
+                    }
+                    self?.countersList = model
+                    guard let response = self?.createMainResponse(counterModel: model) else {
+                        return
+                    }
+                    self?.presenter?.presentCounterListResponse(response)
+                }
+            }
+        } else {
+            presenter?.presentError(ErrorModel(code: .notConnection))
+        }
     }
 
     func select(isSelectAll: Bool) {

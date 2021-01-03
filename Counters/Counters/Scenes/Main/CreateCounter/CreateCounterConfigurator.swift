@@ -10,8 +10,8 @@ import Foundation
 struct CreateCounterConfigurator {
 
     static func configure(_ viewController: CreateCounterViewController) {
-        //let service = CounterService()
-        let interactor = CreateCounterInteractor()
+        let service = CountersService()
+        let interactor = CreateCounterInteractor(service: service)
         let presenter = CreateCounterPresenter()
         let router = CreateCounterRouter()
         viewController.interactor = interactor

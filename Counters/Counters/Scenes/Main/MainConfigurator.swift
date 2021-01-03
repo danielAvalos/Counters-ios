@@ -10,8 +10,8 @@ import Foundation
 struct MainConfigurator {
 
     static func configure(_ viewController: MainViewController) {
-        //let service =    CategoryService()
-        let interactor = MainInteractor()
+        let service = CountersService()
+        let interactor = MainInteractor(service: service)
         let presenter = MainPresenter()
         let router = MainRouter()
         viewController.interactor = interactor
