@@ -18,6 +18,10 @@ struct CounterModel: Codable {
     var isSelected: Bool = false
 
     var asParams: Parameters {
-        return [ "title": title ?? ""] as [String: Any]
+        var params = [ "title": title ?? ""] as [String: Any]
+        if let id = id {
+            params["id"] = id
+        }
+        return params
     }
 }

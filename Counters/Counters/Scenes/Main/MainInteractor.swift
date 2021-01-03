@@ -84,6 +84,10 @@ extension MainInteractor: MainBusinessLogic {
             return
         }
         isSearching = true
+        let searchResult = countersList.filter {
+            $0.title?.lowercased().contains(query.lowercased()) == true
+        }
+        presenter?.presentCounterListResponse(createMainResponse(counterModel: searchResult))
     }
 
     func getCountersSelected() -> Int {

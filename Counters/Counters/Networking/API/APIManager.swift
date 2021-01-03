@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-enum APIRouter {
+enum APIRouter: URLRequestConvertible {
 
     case getCounters
     case addCounter(counter: CounterModel)
@@ -30,7 +30,7 @@ enum APIRouter {
     var path: String {
         switch self {
         case .getCounters:
-            return "/api/v1/counters`"
+            return "/api/v1/counters"
         case .addCounter, .deleteCounter:
             return "/api/v1/counter"
         case .incrementCounter:
@@ -85,5 +85,5 @@ enum APIRouter {
 }
 
 struct Config {
-    static let apiBaseUrl = "https://api.mercadolibre.com/sites"
+    static let apiBaseUrl = "http://localhost:3000/"
 }
