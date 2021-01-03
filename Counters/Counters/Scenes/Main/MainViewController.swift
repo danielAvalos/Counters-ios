@@ -210,6 +210,8 @@ private extension MainViewController {
         let cancelAction = UIAlertAction(title: "Cancel",
                                          style: .cancel,
                                          handler: nil)
+        cancelAction.setValue(UIColor.color(named: .orange),
+                              forKey: "titleTextColor")
         alertController.addAction(cancelAction)
         present(alertController,
                 animated: true,

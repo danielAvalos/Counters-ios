@@ -57,6 +57,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="containerTitleView" destination="dCG-Zf-C8k" id="Qeg-lG-HHn"/>
                         <outlet property="tableView" destination="OZM-0e-cdB" id="Qly-Wa-zR1"/>
                         <outlet property="titleLabel" destination="ogP-el-0lg" id="BDV-0f-OfT"/>
                     </connections>

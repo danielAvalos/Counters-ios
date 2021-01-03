@@ -63,7 +63,7 @@ extension CreateCounterViewController: NavigationConfigureProtocol {
 // MARK: - CreateCounterDisplayLogic
 extension CreateCounterViewController: CreateCounterDisplayLogic {
     func displaySavedStatus(viewModel: CreateCounterViewModel) {
-        showAlert(title: viewModel.title, message: viewModel.message, customActionTitle: "OK") { [weak self] _ in
+        showAlert(title: viewModel.title, message: viewModel.message, customActionTitle: "Continue") { [weak self] _ in
             if viewModel.status == .successful {
                 self?.router?.navigatePopViewController()
             }

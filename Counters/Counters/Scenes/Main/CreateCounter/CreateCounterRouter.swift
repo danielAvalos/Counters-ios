@@ -12,7 +12,7 @@ protocol CreateCounterRoutingLogic {
     func navigateToShowExample()
 }
 
-// MARK: - MainRoutingLogic
+// MARK: - CreateCounterRoutingLogic
 
 final class CreateCounterRouter: NSObject, CreateCounterRoutingLogic {
 

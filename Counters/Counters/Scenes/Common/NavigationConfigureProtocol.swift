@@ -8,13 +8,35 @@
 import UIKit
 
 enum BarButtonItemTag: Int {
-    case edit
     case cancel
+    case create
+    case done
+    case edit
     case save
     case share
     case selectAll
     case unselectAll
-    case done
+
+    var title: String {
+        switch self {
+        case .cancel:
+            return "Cancel"
+        case .create:
+            return "Create"
+        case .done:
+            return "Done"
+        case .edit:
+            return "Edit"
+        case .save:
+            return "Save"
+        case .share:
+            return "Share"
+        case .selectAll:
+            return "Select All"
+        case .unselectAll:
+            return "Unselect All"
+        }
+    }
 }
 
 @objc protocol NavigationConfigureProtocol {
@@ -44,36 +66,10 @@ extension NavigationConfigureProtocol where Self: UIViewController {
     private func getBarButtonItems(items: [BarButtonItemTag]) -> [UIBarButtonItem]? {
         var barButtonItems: [UIBarButtonItem] = [UIBarButtonItem]()
         for item in items {
-            switch item {
-            case BarButtonItemTag.cancel:
-                let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapBarItem))
-                cancel.tag = BarButtonItemTag.cancel.rawValue
-                barButtonItems.append(cancel)
-            case BarButtonItemTag.edit:
-                let edit = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(didTapBarItem))
-                edit.tag = BarButtonItemTag.edit.rawValue
-                barButtonItems.append(edit)
-            case BarButtonItemTag.done:
-                let done = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(didTapBarItem))
-                done.tag = BarButtonItemTag.done.rawValue
-                barButtonItems.append(done)
-            case BarButtonItemTag.save:
-                let save = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didTapBarItem))
-                save.tag = BarButtonItemTag.save.rawValue
-                barButtonItems.append(save)
-            case BarButtonItemTag.share:
-                let share = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(didTapBarItem))
-                share.tag = BarButtonItemTag.share.rawValue
-                barButtonItems.append(share)
-            case BarButtonItemTag.selectAll:
-                let selectAll = UIBarButtonItem(title: "Select All", style: .plain, target: self, action: #selector(didTapBarItem))
-                selectAll.tag = BarButtonItemTag.selectAll.rawValue
-                barButtonItems.append(selectAll)
-            case .unselectAll:
-                let selectAll = UIBarButtonItem(title: "Unselect All", style: .plain, target: self, action: #selector(didTapBarItem))
-                selectAll.tag = BarButtonItemTag.unselectAll.rawValue
-                barButtonItems.append(selectAll)
-            }
+            let action = UIBarButtonItem(title: item.title, style: .plain, target: self, action: #selector(didTapBarItem))
+            action.tag = item.rawValue
+            action.tintColor = UIColor.color(named: .orange)
+            barButtonItems.append(action)
         }
         return barButtonItems
     }

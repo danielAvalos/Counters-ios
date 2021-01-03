@@ -14,10 +14,12 @@ extension UIViewController {
         }
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(
-            title: customActionTitle ?? "OK",
+            title: customActionTitle ?? "Continue",
             style: .default,
             handler: handler
         )
+        okAction.setValue(UIColor.color(named: .orange),
+                          forKey: "titleTextColor")
         alertController.addAction(okAction)
         present(alertController, animated: true)
     }
