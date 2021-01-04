@@ -108,6 +108,8 @@ extension MainInteractor: MainBusinessLogic {
 
     func prepareCountersList() {
         guard !isEditing else {
+            let messageModel = MessageModel(title: nil, description: "You must finish the edition to be able to refresh the list", action: nil)
+            presenter?.presentToast(messageModel)
             return
         }
         isSearching = false
@@ -118,6 +120,7 @@ extension MainInteractor: MainBusinessLogic {
                 }
                 guard let error = error else {
                     strongSelf.countersList = model ?? []
+                    strongSelf.saveServerDataInLocal(model: strongSelf.countersList)
                     guard let response = self?.createMainResponse(counterModel: strongSelf.countersList) else {
                         return
                     }
@@ -180,16 +183,25 @@ private extension MainInteractor {
         return MainResponse(messageItemSelected: message, counters: counterModel)
     }
 
+    func saveServerDataInLocal(model: [CounterModel]) {
+        model.forEach {
+            guard let title = $0.title else {
+                return
+            }
+            _ = CounterCDManager.saveCounter(title: title, $0.id)
+        }
+    }
+
     func getLocalData() -> [CounterModel] {
-        return CoreDataManager.getLocalData()
+        return CounterCDManager.getLocalData()
     }
 
     func updateLocalCounter(model: CounterModel) -> Bool {
-        CoreDataManager.updateCounter(model: model)
+        CounterCDManager.updateCounter(model: model)
     }
 
     func deleteLocalCounter(id: String) -> Bool {
-        CoreDataManager.deleteCounter(id: id)
+        CounterCDManager.deleteCounter(id: id)
     }
 
     func deleteCounter(model: CounterModel) {

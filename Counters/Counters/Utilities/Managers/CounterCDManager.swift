@@ -1,5 +1,5 @@
 //
-//  CoreDataManager.swift
+//  CounterCoreDataManager.swift
 //  Counters
 //
 //  Created by DESARROLLO on 2/01/21.

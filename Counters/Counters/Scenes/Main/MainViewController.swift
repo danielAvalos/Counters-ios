@@ -12,6 +12,7 @@ protocol MainDisplayLogic: class {
     func displayCountersShare(_ textToShare: String)
     func displayMessage(model: MessageModel)
     func displayError(model: ErrorModel)
+    func displayToast(model: MessageModel)
 }
 
 final class MainViewController: UIViewController {
@@ -80,7 +81,7 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigation()
-        if CoreDataManager.isDataChanged {
+        if CounterCDManager.isDataChanged {
             interactor?.prepareCountersList()
         }
     }
@@ -123,6 +124,12 @@ extension MainViewController: NavigationConfigureProtocol {
 
 // MARK: - MainDisplayLogic
 extension MainViewController: MainDisplayLogic {
+    func displayToast(model: MessageModel) {
+        guard let message = model.description else {
+            return
+        }
+        showToast(message: message)
+    }
 
     func displayError(model: ErrorModel) {
         showAlert(title: model.title, message: model.description)

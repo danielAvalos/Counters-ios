@@ -10,6 +10,7 @@ import UIKit
 protocol MainPresentationLogic {
     func presentError(_ response: ErrorModel)
     func presentMessage(_ response: MessageModel)
+    func presentToast(_ response: MessageModel)
     func presentCounterListResponse(_ response: MainResponse)
     func presentTextToShareResponse(_ response: String)
 }
@@ -21,6 +22,9 @@ final class MainPresenter {
 // MARK: - MainPresentationLogic
 
 extension MainPresenter: MainPresentationLogic {
+    func presentToast(_ response: MessageModel) {
+        viewController?.displayToast(model: response)
+    }
 
     func presentMessage(_ response: MessageModel) {
         viewController?.displayMessage(model: response)

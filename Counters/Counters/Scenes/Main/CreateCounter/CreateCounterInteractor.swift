@@ -36,7 +36,7 @@ extension CreateCounterInteractor: CreateCounterBusinessLogic {
         let counterModel = CounterModel(id: nil, title: title)
         service.createCounter(model: counterModel) { [weak self] (_, error) in
             guard let error = error else {
-                if CoreDataManager.saveCounter(title: title) {
+                if CounterCDManager.saveCounter(title: title) {
                     let response = CreateCounterResponse(status: .successful,
                                                          message: "Counter Created")
                     self?.presenter?.presentStatusSaved(response: response)
