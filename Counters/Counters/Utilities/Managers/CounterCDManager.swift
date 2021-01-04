@@ -24,7 +24,7 @@ struct CounterCDManager {
             return false
         }
         let counter = NSManagedObject(entity: counterEntity, insertInto: managedContext)
-        counter.setValue("\(title)", forKey: "id")
+        counter.setValue("\(id)", forKey: "id")
         counter.setValue("\(title)", forKey: "title")
         counter.setValue(0, forKey: "count")
         do {

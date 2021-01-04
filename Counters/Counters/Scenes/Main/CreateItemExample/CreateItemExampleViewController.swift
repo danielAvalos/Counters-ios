@@ -99,15 +99,7 @@ extension CreateItemExampleViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // swiftlint:disable:next force_unwrapping
-        let viewModel = self.dataProvider[indexPath]!
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ItemExamplesCollectionViewCell.reuseIdentifier) else {
-            fatalError("Main Section Cell Not Found - Reuse identifier: \(CounterTableViewCell.reuseIdentifier)")
-        }
-        guard let configurableCell = cell as? MainConfigurable else {
-            fatalError("Main Section Cell Must Conform with MainnConfigurable")
-        }
-        return cell
+        return UITableViewCell()
     }
 }
 

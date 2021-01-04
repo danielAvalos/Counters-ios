@@ -180,7 +180,7 @@ private extension MainInteractor {
             return $0.count > 0
         }.count
         let message = "\(itemSelected) items · Counted \(sumCount) times"
-        return MainResponse(messageItemSelected: message, counters: counterModel)
+        return MainResponse(messageItemSelected: message, counters: counterModel, isSearching: isSearching)
     }
 
     func saveServerDataInLocal(model: [CounterModel]) {

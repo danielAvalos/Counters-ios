@@ -10,4 +10,5 @@ import Foundation
 struct MainResponse {
     let messageItemSelected: String
     let counters: [CounterModel]
+    let isSearching: Bool
 }

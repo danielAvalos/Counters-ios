@@ -110,12 +110,7 @@ extension MainViewController: NavigationConfigureProtocol {
             interactor?.select(isSelectAll: false)
             showRightBarButtonItems(navigationItem: navigationItem, items: [.selectAll])
         case BarButtonItemTag.done.rawValue:
-            interactor?.isEditing = false
-            tableView.reloadData()
-            deleteButton.isHidden = true
-            actionButton.setImage(UIImage(systemName: "plus"), for: .normal)
-            showLeftBarButtonItems(navigationItem: navigationItem, items: [.edit])
-            showRightBarButtonItems(navigationItem: navigationItem, items: [])
+            changeDoneStatus()
         default:
             break
         }
@@ -136,6 +131,7 @@ extension MainViewController: MainDisplayLogic {
     }
 
     func displayMessage(model: MessageModel) {
+        dataProvider.update(rows: [])
         genericMessageStateHeader.configureView(message: model)
         genericMessageStateHeader.delegate = self
         genericMessageStateHeader.autoresizingMask = .flexibleWidth
@@ -148,6 +144,16 @@ extension MainViewController: MainDisplayLogic {
                                                                                       verticalFittingPriority: UILayoutPriority.fittingSizeLevel)
             .height
         tableView.tableHeaderView = genericMessageStateHeader
+        interactor?.isEditing = false
+        deleteButton.isHidden = true
+        actionButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        showLeftBarButtonItems(navigationItem: navigationItem,
+                               items: [])
+        showRightBarButtonItems(navigationItem: navigationItem,
+                                items: [])
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 
     func displayCountersShare(_ textToShare: String) {
@@ -222,6 +228,17 @@ private extension MainViewController {
         tableView.rowHeight = UITableView.automaticDimension
     }
 
+    func changeDoneStatus() {
+        interactor?.isEditing = false
+        deleteButton.isHidden = true
+        actionButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        showLeftBarButtonItems(navigationItem: navigationItem, items: [.edit])
+        showRightBarButtonItems(navigationItem: navigationItem, items: [])
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+
     // MARK: - Actions
 
     @objc
@@ -234,6 +251,9 @@ private extension MainViewController {
         if interactor?.isEditing == true {
             interactor?.shareCountersSelected()
         } else {
+            if interactor?.isEditing == true {
+                changeDoneStatus()
+            }
             router?.navigateToNewCounter()
         }
     }

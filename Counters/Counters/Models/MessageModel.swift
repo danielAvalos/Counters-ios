@@ -15,6 +15,7 @@ struct MessageModel {
     enum ButtonItem {
         case newCounter
         case reloadData
+        case notResult
 
         var title: String {
             switch self {
@@ -22,6 +23,8 @@ struct MessageModel {
                 return "Create a counter"
             case .reloadData:
                 return "Retry"
+            case .notResult:
+                return "Other Search"
             }
         }
     }

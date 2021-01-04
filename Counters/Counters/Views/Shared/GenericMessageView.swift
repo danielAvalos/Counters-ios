@@ -40,9 +40,24 @@ final class GenericMessageView: UIView, NibLoadableView {
 extension GenericMessageView {
     func configureView(message: MessageModel) {
         self.action = message.action
-        titleLabel.text = message.title
-        messageLabel.text = message.description
-        actionButton.setTitle(message.action?.title, for: .normal)
+        if let title = message.title {
+            titleLabel.text = title
+            titleLabel.isHidden = false
+        } else {
+            titleLabel.isHidden = true
+        }
+        if let description = message.description {
+            messageLabel.text = description
+            messageLabel.isHidden = false
+        } else {
+            messageLabel.isHidden = true
+        }
+        if let action = message.action {
+            actionButton.setTitle(action.title, for: .normal)
+            actionButton.isHidden = false
+        } else {
+            actionButton.isHidden = true
+        }
     }
 }
 

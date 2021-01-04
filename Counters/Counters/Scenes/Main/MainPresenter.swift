@@ -40,10 +40,15 @@ extension MainPresenter: MainPresentationLogic {
 
     func presentCounterListResponse(_ response: MainResponse) {
         guard !response.counters.isEmpty else {
-            let messageModel = MessageModel(title: "No counters yet",
+            if response.isSearching {
+                let messageModel = MessageModel(title: nil, description: "Not result", action: nil)
+                viewController?.displayMessage(model: messageModel)
+            } else {
+                let messageModel = MessageModel(title: "No counters yet",
                                             description: "When I started counting my blessings, my whole life turned around. \n —Willie Nelson",
                                             action: .newCounter)
-            viewController?.displayMessage(model: messageModel)
+                viewController?.displayMessage(model: messageModel)
+            }
             return
         }
         let viewModel: [MainViewModel] = response.counters.map { (counterModel) -> MainViewModel in
