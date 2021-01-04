@@ -125,7 +125,7 @@ extension MainInteractor: MainBusinessLogic {
         isSearching = false
         if ReachabilityManager.shared.isConnected {
             service.fetchCounters { [weak self] (model, error) in
-                if error == nil {
+                guard let error = error else {
                     guard let model = model, !model.isEmpty else {
                         self?.presenter?.presentTextToShareResponse("")
                         return
@@ -135,10 +135,15 @@ extension MainInteractor: MainBusinessLogic {
                         return
                     }
                     self?.presenter?.presentCounterListResponse(response)
+                    return
                 }
+                let messageModel = MessageModel(title: error.title, description: error.description, action: .reloadData)
+                self?.presenter?.presentMessage(messageModel)
             }
         } else {
-            presenter?.presentError(ErrorModel(code: .notConnection))
+            let errorModel = ErrorModel(code: .notConnection)
+            let messageModel = MessageModel(title: errorModel.title, description: errorModel.description, action: .reloadData)
+            presenter?.presentMessage(messageModel)
         }
     }
 

@@ -9,7 +9,7 @@ import Foundation
 
 struct ErrorModel: ErrorRepresentable {
 
-    var description: String? {
+    var description: String {
         switch code {
         case .notConnection:
             return "Please check your internet connection and try again"
@@ -18,9 +18,27 @@ struct ErrorModel: ErrorRepresentable {
         case .errorServer:
             return "Something went wrong, the service is not available, please try again later"
         case .other:
-            return descriptionLocalizable
+            return descriptionLocalizable ?? ""
         }
     }
+
+    var title: String {
+        switch code {
+        case .notConnection:
+            return "Not Connection"
+        case .unknown:
+            return "Unknow"
+        case .badRequest:
+            return "Bad Request"
+        case .notFound:
+            return "Not Found"
+        case .errorServer:
+            return "Error in Server"
+        case .other:
+            return descriptionLocalizable ?? ""
+        }
+    }
+
     var code: ErrorCode
     var descriptionLocalizable: String?
 }

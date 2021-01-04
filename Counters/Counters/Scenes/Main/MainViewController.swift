@@ -10,7 +10,8 @@ import UIKit
 protocol MainDisplayLogic: class {
     func displayCounters(_ viewmodel: [MainViewModel], message: String)
     func displayCountersShare(_ textToShare: String)
-    func displayEmptyCounterMessage(model: MessageModel)
+    func displayMessage(model: MessageModel)
+    func displayError(model: ErrorModel)
 }
 
 final class MainViewController: UIViewController {
@@ -122,7 +123,12 @@ extension MainViewController: NavigationConfigureProtocol {
 
 // MARK: - MainDisplayLogic
 extension MainViewController: MainDisplayLogic {
-    func displayEmptyCounterMessage(model: MessageModel) {
+
+    func displayError(model: ErrorModel) {
+        showAlert(title: model.title, message: model.description)
+    }
+
+    func displayMessage(model: MessageModel) {
         genericMessageStateHeader.configureView(message: model)
         genericMessageStateHeader.delegate = self
         genericMessageStateHeader.autoresizingMask = .flexibleWidth
@@ -159,6 +165,7 @@ extension MainViewController: MainDisplayLogic {
             showLeftBarButtonItems(navigationItem: navigationItem, items: [.edit])
             itemsSelectedLabel.text = message
             itemsSelectedLabel.isHidden = false
+            tableView.tableHeaderView = nil
         } else {
             itemsSelectedLabel.isHidden = true
         }
@@ -171,7 +178,13 @@ extension MainViewController: MainDisplayLogic {
 // MARK: - GenericMessageViewDelegate
 
 extension MainViewController: GenericMessageViewDelegate {
-    func didTapActionButton() {
+    func didTapActionButton(action: MessageModel.ButtonItem) {
+        switch action {
+        case .newCounter:
+            router?.navigateToNewCounter()
+        default:
+            interactor?.prepareCountersList()
+        }
     }
 }
 

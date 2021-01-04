@@ -8,10 +8,12 @@
 import UIKit
 
 protocol GenericMessageViewDelegate: AnyObject {
-    func didTapActionButton()
+    func didTapActionButton(action: MessageModel.ButtonItem)
 }
 
 final class GenericMessageView: UIView, NibLoadableView {
+
+    private var action: MessageModel.ButtonItem?
 
     // MARK: - IBOutlets
 
@@ -37,15 +39,19 @@ final class GenericMessageView: UIView, NibLoadableView {
 
 extension GenericMessageView {
     func configureView(message: MessageModel) {
+        self.action = message.action
         titleLabel.text = message.title
         messageLabel.text = message.description
-        actionButton.setTitle(message.titleAction, for: .normal)
+        actionButton.setTitle(message.action?.title, for: .normal)
     }
 }
 
 // MARK: IBActions
 private extension GenericMessageView {
     @IBAction func didTapAction(_: Any) {
-        delegate?.didTapActionButton()
+        guard let action = action else {
+            return
+        }
+        delegate?.didTapActionButton(action: action)
     }
 }

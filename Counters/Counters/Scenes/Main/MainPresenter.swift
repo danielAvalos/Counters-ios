@@ -9,9 +9,9 @@ import UIKit
 
 protocol MainPresentationLogic {
     func presentError(_ response: ErrorModel)
+    func presentMessage(_ response: MessageModel)
     func presentCounterListResponse(_ response: MainResponse)
     func presentTextToShareResponse(_ response: String)
-    func presentCounterUpdatedResponse(_ response: MainResponse)
 }
 
 final class MainPresenter {
@@ -22,10 +22,12 @@ final class MainPresenter {
 
 extension MainPresenter: MainPresentationLogic {
 
-    func presentCounterUpdatedResponse(_ response: MainResponse) {
+    func presentMessage(_ response: MessageModel) {
+        viewController?.displayMessage(model: response)
     }
 
     func presentError(_ response: ErrorModel) {
+        viewController?.displayError(model: response)
     }
 
     func presentTextToShareResponse(_ response: String) {
@@ -36,8 +38,8 @@ extension MainPresenter: MainPresentationLogic {
         guard !response.counters.isEmpty else {
             let messageModel = MessageModel(title: "No counters yet",
                                             description: "When I started counting my blessings, my whole life turned around. \n —Willie Nelson",
-                                            titleAction: "Create a counter")
-            viewController?.displayEmptyCounterMessage(model: messageModel)
+                                            action: .newCounter)
+            viewController?.displayMessage(model: messageModel)
             return
         }
         let viewModel: [MainViewModel] = response.counters.map { (counterModel) -> MainViewModel in
