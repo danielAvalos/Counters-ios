@@ -84,23 +84,11 @@ extension MainInteractor: MainBusinessLogic {
 
     func deleteSelected() {
         let dataToDelete = countersList.filter { $0.isSelected }
-        guard let firstToDelete = dataToDelete.first else {
+        guard let next = dataToDelete.first else {
+            presenter?.presentCounterListResponse(createMainResponse(counterModel: countersList))
             return
         }
-        service.deleteCounter(model: firstToDelete) { [weak self] (_, error) in
-            guard let strongSelf = self,
-                  let id = firstToDelete.id else {
-                return
-            }
-            if error == nil {
-                if strongSelf.deleteLocalCounter(id: id) {
-                    strongSelf.countersList.removeAll { $0.id == id }
-                }
-                strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
-            } else {
-                strongSelf.presenter?.presentError(ErrorModel(code: .errorServer, descriptionLocalizable: error?.description))
-            }
-        }
+        deleteCounter(model: next)
     }
 
     func filterContent(forQuery query: String?) {
@@ -125,13 +113,12 @@ extension MainInteractor: MainBusinessLogic {
         isSearching = false
         if ReachabilityManager.shared.isConnected {
             service.fetchCounters { [weak self] (model, error) in
+                guard let strongSelf = self else {
+                    return
+                }
                 guard let error = error else {
-                    guard let model = model, !model.isEmpty else {
-                        self?.presenter?.presentTextToShareResponse("")
-                        return
-                    }
-                    self?.countersList = model
-                    guard let response = self?.createMainResponse(counterModel: model) else {
+                    strongSelf.countersList = model ?? []
+                    guard let response = self?.createMainResponse(counterModel: strongSelf.countersList) else {
                         return
                     }
                     self?.presenter?.presentCounterListResponse(response)
@@ -203,5 +190,21 @@ private extension MainInteractor {
 
     func deleteLocalCounter(id: String) -> Bool {
         CoreDataManager.deleteCounter(id: id)
+    }
+
+    func deleteCounter(model: CounterModel) {
+        service.deleteCounter(model: model) { [weak self] (_, error) in
+            guard let strongSelf = self,
+                  let id = model.id else {
+                return
+            }
+            if error == nil {
+                _ = strongSelf.deleteLocalCounter(id: id)
+                if let index = strongSelf.countersList.firstIndex(where: { $0.isSelected }) {
+                    strongSelf.countersList.remove(at: index)
+                }
+            }
+            strongSelf.deleteSelected()
+        }
     }
 }

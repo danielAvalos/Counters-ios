@@ -235,12 +235,14 @@ private extension MainViewController {
         let alertController = UIAlertController(title: nil,
                                                 message: nil,
                                                 preferredStyle: .actionSheet)
-        alertController
-            .popoverPresentationController?
-            .sourceRect = CGRect(x: 0,
-                                 y: UIScreen.main.bounds.height / 2,
-                                 width: UIScreen.main.bounds.width,
-                                 height: 0)
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = self.view //to set the source of your alert
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX,
+                                                  y: self.view.bounds.midY,
+                                                  width: 0,
+                                                  height: 0) // you can set this as per your requirement.
+            popoverController.permittedArrowDirections = [] //to hide the arrow of any particular direction
+        }
         let counterSelected = interactor?.getCountersSelected() ?? 0
         let deleteAction = UIAlertAction(title: "Delete \(counterSelected) \(counterSelected > 1 ? "Counters" : "Counter")",
                                          style: .destructive) { [weak self] _ in
