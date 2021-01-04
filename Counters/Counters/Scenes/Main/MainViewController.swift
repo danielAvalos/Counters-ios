@@ -10,6 +10,7 @@ import UIKit
 protocol MainDisplayLogic: class {
     func displayCounters(_ viewmodel: [MainViewModel], message: String)
     func displayCountersShare(_ textToShare: String)
+    func displayEmptyCounterMessage(model: MessageModel)
 }
 
 final class MainViewController: UIViewController {
@@ -17,6 +18,10 @@ final class MainViewController: UIViewController {
     var interactor: (MainBusinessLogic & MainDataStore)?
     var router: MainRoutingLogic?
     var isopenSearch: Bool = false
+
+    // MARK: Private Properties
+
+    lazy var genericMessageStateHeader: GenericMessageView = GenericMessageView.nibInstance
     private var dataProvider = MainDataProvider(rows: [])
 
     // MARK: - IBOutlets
@@ -117,6 +122,20 @@ extension MainViewController: NavigationConfigureProtocol {
 
 // MARK: - MainDisplayLogic
 extension MainViewController: MainDisplayLogic {
+    func displayEmptyCounterMessage(model: MessageModel) {
+        genericMessageStateHeader.configureView(message: model)
+        genericMessageStateHeader.delegate = self
+        genericMessageStateHeader.autoresizingMask = .flexibleWidth
+        genericMessageStateHeader.translatesAutoresizingMaskIntoConstraints = true
+        genericMessageStateHeader.setNeedsLayout()
+        genericMessageStateHeader.layoutIfNeeded()
+        let size = CGSize(width: UIScreen.main.bounds.width, height: 0)
+        genericMessageStateHeader.frame.size.height = genericMessageStateHeader.systemLayoutSizeFitting(size,
+                                                                                      withHorizontalFittingPriority: UILayoutPriority.required,
+                                                                                      verticalFittingPriority: UILayoutPriority.fittingSizeLevel)
+            .height
+        tableView.tableHeaderView = genericMessageStateHeader
+    }
 
     func displayCountersShare(_ textToShare: String) {
         // set up activity view controller
@@ -149,9 +168,17 @@ extension MainViewController: MainDisplayLogic {
     }
 }
 
+// MARK: - GenericMessageViewDelegate
+
+extension MainViewController: GenericMessageViewDelegate {
+    func didTapActionButton() {
+    }
+}
+
 // MARK: - Private functions
 
 private extension MainViewController {
+
     func setup() {
         MainConfigurator.configure(self)
     }

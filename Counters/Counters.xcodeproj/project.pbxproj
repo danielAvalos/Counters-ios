@@ -62,6 +62,9 @@
 		E963173625A15D7A00AE8F2F /* CreateItemExampleRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963173525A15D7A00AE8F2F /* CreateItemExampleRouter.swift */; };
 		E963173B25A1639000AE8F2F /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963173A25A1639000AE8F2F /* ReachabilityManager.swift */; };
 		E963174025A165F000AE8F2F /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963173F25A165F000AE8F2F /* ErrorModel.swift */; };
+		E963177725A2CF9400AE8F2F /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963177625A2CF9400AE8F2F /* NibLoadableView.swift */; };
+		E963177C25A2D0F700AE8F2F /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963177B25A2D0F700AE8F2F /* MessageModel.swift */; };
+		E963178225A2D2EA00AE8F2F /* NibNameIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963178125A2D2EA00AE8F2F /* NibNameIdentifiable.swift */; };
 		E9E6ECCD259B7EDE001B1FFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E6ECCC259B7EDE001B1FFF /* AppDelegate.swift */; };
 		E9E6ECCF259B7EDE001B1FFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E6ECCE259B7EDE001B1FFF /* SceneDelegate.swift */; };
 		E9E6ECD7259B7EDF001B1FFF /* Counters.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9E6ECD5259B7EDF001B1FFF /* Counters.xcdatamodeld */; };
@@ -153,6 +156,9 @@
 		E963173525A15D7A00AE8F2F /* CreateItemExampleRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemExampleRouter.swift; sourceTree = "<group>"; };
 		E963173A25A1639000AE8F2F /* ReachabilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityManager.swift; sourceTree = "<group>"; };
 		E963173F25A165F000AE8F2F /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		E963177625A2CF9400AE8F2F /* NibLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
+		E963177B25A2D0F700AE8F2F /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
+		E963178125A2D2EA00AE8F2F /* NibNameIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibNameIdentifiable.swift; sourceTree = "<group>"; };
 		E9E6ECC9259B7EDE001B1FFF /* Counters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Counters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9E6ECCC259B7EDE001B1FFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9E6ECCE259B7EDE001B1FFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -347,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				E963169525A0E89600AE8F2F /* NavigationConfigureProtocol.swift */,
+				E963177625A2CF9400AE8F2F /* NibLoadableView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -355,8 +362,8 @@
 			isa = PBXGroup;
 			children = (
 				E963173025A15D7100AE8F2F /* CreateItemExampleConfigurator.swift */,
-				E96316C125A0FFE200AE8F2F /* CreateItemExampleViewController.swift */,
 				E963173525A15D7A00AE8F2F /* CreateItemExampleRouter.swift */,
+				E96316C125A0FFE200AE8F2F /* CreateItemExampleViewController.swift */,
 			);
 			path = CreateItemExample;
 			sourceTree = "<group>";
@@ -377,6 +384,14 @@
 				E96316FE25A10EF100AE8F2F /* CreateItemExampleViewModel.swift */,
 			);
 			path = CreateItemExamples;
+			sourceTree = "<group>";
+		};
+		E963178025A2D2E000AE8F2F /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				E963178125A2D2EA00AE8F2F /* NibNameIdentifiable.swift */,
+			);
+			path = Others;
 			sourceTree = "<group>";
 		};
 		E9E6ECC0259B7EDE001B1FFF = {
@@ -469,6 +484,7 @@
 		E9E6ED0F259B7FF5001B1FFF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				E963178025A2D2E000AE8F2F /* Others */,
 				E916666F259BD2CE0003102F /* Managers */,
 			);
 			path = Utilities;
@@ -502,6 +518,7 @@
 				E963165E25A0C81C00AE8F2F /* Main */,
 				E9631609259D44E300AE8F2F /* CounterModel.swift */,
 				E963173F25A165F000AE8F2F /* ErrorModel.swift */,
+				E963177B25A2D0F700AE8F2F /* MessageModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -848,11 +865,13 @@
 				E916664C259BC6FC0003102F /* GenericMessageView.swift in Sources */,
 				E963166E25A0C96300AE8F2F /* DataProvider.swift in Sources */,
 				E9166671259BD2E80003102F /* StoryboardManager.swift in Sources */,
+				E963177C25A2D0F700AE8F2F /* MessageModel.swift in Sources */,
 				E96315DD259CA34000AE8F2F /* WelcomePresenter.swift in Sources */,
 				E96316F725A10E9A00AE8F2F /* CreateItemExampleDataProvider.swift in Sources */,
 				E963161C259D502A00AE8F2F /* UIColor+Brand.swift in Sources */,
 				E963162B259D5B0300AE8F2F /* CustomizedView.swift in Sources */,
 				E9E6ED1A259B80E4001B1FFF /* AppRouter.swift in Sources */,
+				E963177725A2CF9400AE8F2F /* NibLoadableView.swift in Sources */,
 				E9166665259BD2470003102F /* CreateCounterViewController.swift in Sources */,
 				E963167425A0C98B00AE8F2F /* MainDataProvider.swift in Sources */,
 				E96316AC25A0FE0D00AE8F2F /* CreateCounterRouter.swift in Sources */,
@@ -876,6 +895,7 @@
 				E963164B25A0B33900AE8F2F /* APIManager.swift in Sources */,
 				E963173B25A1639000AE8F2F /* ReachabilityManager.swift in Sources */,
 				E96316D725A103FC00AE8F2F /* ItemExamplesCollectionViewCell.swift in Sources */,
+				E963178225A2D2EA00AE8F2F /* NibNameIdentifiable.swift in Sources */,
 				E9631633259D5D3700AE8F2F /* CustomizedTextField.swift in Sources */,
 				E96315EA259CA9AD00AE8F2F /* MainConfigurator.swift in Sources */,
 				E963167925A0C9AC00AE8F2F /* MainViewModel.swift in Sources */,
