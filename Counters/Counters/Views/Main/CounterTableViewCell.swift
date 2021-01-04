@@ -19,6 +19,7 @@ final class CounterTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
     @IBOutlet private weak var quantityLabel: UILabel!
+    @IBOutlet private weak var quantityContainerView: CustomizedView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var containerDataView: UIView! {
             didSet {
@@ -41,7 +42,6 @@ final class CounterTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        updateUI()
     }
 }
 
@@ -49,6 +49,7 @@ final class CounterTableViewCell: UITableViewCell {
 private extension CounterTableViewCell {
     func updateUI() {
         checkImageView.layer.cornerRadius = checkImageView.frame.width / 2
+        quantityContainerView.stopActivityIndicator(animated: true)
     }
 
     // MARK: - IBActions
@@ -56,6 +57,7 @@ private extension CounterTableViewCell {
         guard let counterModel = self.counterModel else {
             return
         }
+        quantityContainerView.startActivityIndicator()
         delegate?.counterViewDidTapDecrementCounter(counterModel)
     }
 
@@ -63,6 +65,7 @@ private extension CounterTableViewCell {
         guard let counterModel = self.counterModel else {
             return
         }
+        quantityContainerView.startActivityIndicator()
         delegate?.counterViewDidTapIncrementCounter(counterModel)
     }
 }
@@ -71,6 +74,7 @@ private extension CounterTableViewCell {
 extension CounterTableViewCell: MainConfigurable {
 
     func configure(with viewModel: MainViewModel, parent: AnyObject) {
+        updateUI()
         let counterModel = viewModel.counter
         self.counterModel = counterModel
         if isEditing {

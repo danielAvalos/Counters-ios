@@ -211,6 +211,7 @@
                 <outlet property="minusQuantityButton" destination="Qg7-Zm-ABL" id="zq1-oZ-sV1"/>
                 <outlet property="nameLabel" destination="ASo-hM-G9q" id="YQb-pC-bbB"/>
                 <outlet property="plusQuantityButton" destination="5Ut-wx-kW6" id="c6s-f4-gSu"/>
+                <outlet property="quantityContainerView" destination="03a-Fv-NmP" id="CKB-Su-zv4"/>
                 <outlet property="quantityLabel" destination="Pgf-Mm-vEF" id="drY-9r-H8H"/>
                 <outlet property="stepQuantityContainerView" destination="03a-Fv-NmP" id="uDu-ha-yuj"/>
             </connections>

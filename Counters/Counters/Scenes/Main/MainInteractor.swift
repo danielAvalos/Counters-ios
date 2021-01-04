@@ -57,9 +57,8 @@ extension MainInteractor: MainBusinessLogic {
                       let model = self?.countersList[index] else {
                     return
                 }
-                if strongSelf.updateLocalCounter(model: model) {
-                    strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
-                }
+                _ = strongSelf.updateLocalCounter(model: model)
+                strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
             } else {
             }
         }
@@ -76,9 +75,8 @@ extension MainInteractor: MainBusinessLogic {
                       let model = self?.countersList[index] else {
                     return
                 }
-                if strongSelf.updateLocalCounter(model: model) {
-                    strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
-                }
+                _ = strongSelf.updateLocalCounter(model: model)
+                strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
             } else {
             }
         }
