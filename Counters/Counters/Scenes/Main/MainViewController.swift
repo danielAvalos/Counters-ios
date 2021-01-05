@@ -124,6 +124,9 @@ extension MainViewController: MainDisplayLogic {
             return
         }
         showToast(message: message)
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 
     func displayError(model: ErrorModel) {
