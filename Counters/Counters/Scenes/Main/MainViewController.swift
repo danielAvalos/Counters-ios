@@ -214,6 +214,7 @@ private extension MainViewController {
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
         searchController.delegate = self
+        searchController.searchBar.delegate = self
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationController?.navigationBar.prefersLargeTitles = true
         deleteButton.isHidden = interactor?.isEditing == false
@@ -285,6 +286,13 @@ private extension MainViewController {
         present(alertController,
                 animated: true,
                 completion: nil)
+    }
+}
+
+// MARK: - UISearchBarDelegate
+extension MainViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        interactor?.prepareCountersList()
     }
 }
 

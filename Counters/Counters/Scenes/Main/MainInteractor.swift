@@ -46,21 +46,23 @@ final class MainInteractor: MainDataStore {
 // MARK: - MainBusinessLogic
 
 extension MainInteractor: MainBusinessLogic {
+
     func incrementCounter(counter: CounterModel) {
         guard let index = countersList.firstIndex(where: { $0.id == counter.id && $0.title == counter.title }) else {
             return
         }
         countersList[index].count += 1
         service.incrementCounter(model: countersList[index]) { [weak self] (model, error) in
-            if error == nil {
-                guard let strongSelf = self,
-                      let model = self?.countersList[index] else {
-                    return
-                }
+            guard let strongSelf = self,
+                  let model = self?.countersList[index] else {
+                return
+            }
+            guard let error = error else {
                 _ = strongSelf.updateLocalCounter(model: model)
                 strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
-            } else {
+                return
             }
+            strongSelf.showMessageError(error: error)
         }
     }
 
@@ -70,15 +72,16 @@ extension MainInteractor: MainBusinessLogic {
         }
         countersList[index].count = counter.count > 1 ? counter.count - 1 : 0
         service.decrementCounter(model: countersList[index]) { [weak self] (model, error) in
-            if error == nil {
-                guard let strongSelf = self,
-                      let model = self?.countersList[index] else {
-                    return
-                }
+            guard let strongSelf = self,
+                  let model = self?.countersList[index] else {
+                return
+            }
+            guard let error = error else {
                 _ = strongSelf.updateLocalCounter(model: model)
                 strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
-            } else {
+                return
             }
+            strongSelf.showMessageError(error: error)
         }
     }
 
@@ -127,13 +130,16 @@ extension MainInteractor: MainBusinessLogic {
                     self?.presenter?.presentCounterListResponse(response)
                     return
                 }
-                let messageModel = MessageModel(title: error.title, description: error.description, action: .reloadData)
-                self?.presenter?.presentMessage(messageModel)
+                strongSelf.showMessageError(error: error)
             }
         } else {
             let errorModel = ErrorModel(code: .notConnection)
             let messageModel = MessageModel(title: errorModel.title, description: errorModel.description, action: .reloadData)
-            presenter?.presentMessage(messageModel)
+            if countersList.isEmpty {
+                presenter?.presentMessage(messageModel)
+            } else {
+                presenter?.presentToast(messageModel)
+            }
         }
     }
 
@@ -189,6 +195,15 @@ private extension MainInteractor {
                 return
             }
             _ = CounterCDManager.saveCounter(title: title, $0.id)
+        }
+    }
+
+    func showMessageError(error: ErrorModel) {
+        let messageModel = MessageModel(title: error.title, description: error.description, action: .reloadData)
+        if countersList.isEmpty {
+            presenter?.presentMessage(messageModel)
+        } else {
+            presenter?.presentToast(messageModel)
         }
     }
 
