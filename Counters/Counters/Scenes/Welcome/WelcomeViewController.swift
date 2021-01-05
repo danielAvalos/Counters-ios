@@ -9,7 +9,6 @@ import UIKit
 
 final class WelcomeViewController: UIViewController {
 
-    //var interactor: (HomeBusinessLogic & HomeDataStore)?
     var router: WelcomeRoutingLogic?
 
     // MARK: - IBOutlets

@@ -11,7 +11,7 @@ protocol WelcomeRoutingLogic {
     func navigateToMain()
 }
 
-// MARK: - HomeRoutingLogic
+// MARK: - WelcomeRoutingLogic
 
 final class WelcomeRouter: NSObject, WelcomeRoutingLogic {
 

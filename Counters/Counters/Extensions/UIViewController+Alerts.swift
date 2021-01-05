@@ -71,25 +71,25 @@ extension UIViewController {
                                     multiplier: 1, constant: 15)
         toastContainer.addConstraints([label1, label2, label3, label4])
 
-        let controller1 = NSLayoutConstraint(item: toastContainer,
+        let constraint1 = NSLayoutConstraint(item: toastContainer,
                                     attribute: .leading,
                                     relatedBy: .equal,
                                     toItem: self.view,
                                     attribute: .leading,
                                     multiplier: 1, constant: 65)
-        let controller2 = NSLayoutConstraint(item: toastContainer,
+        let constraint2 = NSLayoutConstraint(item: toastContainer,
                                     attribute: .trailing,
                                     relatedBy: .equal,
                                     toItem: self.view,
                                     attribute: .trailing,
                                     multiplier: 1, constant: -65)
-        let controller3 = NSLayoutConstraint(item: toastContainer,
+        let constraint3 = NSLayoutConstraint(item: toastContainer,
                                     attribute: .bottom,
                                     relatedBy: .equal,
                                     toItem: self.view,
                                     attribute: .bottom,
                                     multiplier: 1, constant: -75)
-        self.view.addConstraints([controller1, controller2, controller3])
+        self.view.addConstraints([constraint1, constraint2, constraint3])
 
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn, animations: {
             toastContainer.alpha = 1.0

@@ -96,6 +96,7 @@ extension MainInteractor: MainBusinessLogic {
 
     func filterContent(forQuery query: String?) {
         guard let query = query, !query.isEmpty else {
+            presenter?.presentCounterListResponse(createMainResponse(counterModel: countersList))
             return
         }
         isSearching = true

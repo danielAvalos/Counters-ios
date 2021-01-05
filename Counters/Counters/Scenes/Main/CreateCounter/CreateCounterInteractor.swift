@@ -49,8 +49,3 @@ extension CreateCounterInteractor: CreateCounterBusinessLogic {
         }
     }
 }
-
-// MARK: - Private functions
-
-private extension CreateCounterInteractor {
-}
