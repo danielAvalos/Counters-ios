@@ -51,13 +51,13 @@ extension MainInteractor: MainBusinessLogic {
         guard let index = countersList.firstIndex(where: { $0.id == counter.id && $0.title == counter.title }) else {
             return
         }
-        countersList[index].count += 1
         service.incrementCounter(model: countersList[index]) { [weak self] (model, error) in
             guard let strongSelf = self,
                   let model = self?.countersList[index] else {
                 return
             }
             guard let error = error else {
+                strongSelf.countersList[index].count += 1
                 _ = strongSelf.updateLocalCounter(model: model)
                 strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
                 return
@@ -70,13 +70,13 @@ extension MainInteractor: MainBusinessLogic {
         guard let index = countersList.firstIndex(where: { $0.id == counter.id && $0.title == counter.title }) else {
             return
         }
-        countersList[index].count = counter.count > 1 ? counter.count - 1 : 0
         service.decrementCounter(model: countersList[index]) { [weak self] (model, error) in
             guard let strongSelf = self,
                   let model = self?.countersList[index] else {
                 return
             }
             guard let error = error else {
+                strongSelf.countersList[index].count = counter.count > 1 ? counter.count - 1 : 0
                 _ = strongSelf.updateLocalCounter(model: model)
                 strongSelf.presenter?.presentCounterListResponse(strongSelf.createMainResponse(counterModel: strongSelf.countersList))
                 return

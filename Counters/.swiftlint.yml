@@ -47,8 +47,8 @@ force_unwrapping: error
 reporter: "xcode"
 
 excluded:
- - MeliAppTests
- - MeliApp/Vendor
+ - CountersTests
+ - Counters/Vendor
  - Pods
 
 file_header:
